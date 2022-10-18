@@ -19,13 +19,13 @@ public class CardReaderService {
     //methods to connect API with UI controller
 
     @GetMapping
-    public String getStatus() {
-        return cardReaderAPI.useCardReader("status");
+    public void getStatus() {
+        cardReaderAPI.useCardReader("status");
     }
 
     @GetMapping
-    public String getResult() {
-        return cardReaderAPI.useCardReader("result");
+    public void getResult() {
+        cardReaderAPI.useCardReader("result");
     }
 
     @PostMapping

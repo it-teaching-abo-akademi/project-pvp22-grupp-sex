@@ -1,5 +1,6 @@
 package com.example.demo.GUI;
 
+import com.example.demo.api.CashBoxAPI;
 import com.example.demo.model.Order;
 import com.example.demo.service.CardReaderService;
 import com.example.demo.service.CashBoxService;
@@ -68,16 +69,15 @@ public class CashierViewController {
 
     //if cashbox is closed, open it. Else, do nothing.
     public void openCashbox(MouseEvent mouseEvent) {
-        if (cashBoxService.getCashBoxStatus()=="CLOSED") {
-            cashBoxService.openCashBox();
-        }
+        CashBoxAPI cashAPI = new CashBoxAPI();
+        cashAPI.openCashbox();
     }
 
     //start by resetting card reader to idle
     //then call waitforpayment
     //wait until customer has completed payment (or failed to do so) and return the result
     public String cardPayment(MouseEvent mouseEvent) {
-        cardReaderService.resetCardReader();
+        /*cardReaderService.resetCardReader();
         cardReaderService.waitForPayment(order.getAmount());
         while(cardReaderService.getStatus()=="WAITING_FOR_PAYMENT"){
             ;
@@ -86,12 +86,15 @@ public class CashierViewController {
             return "No transaction taking place here officer";
         }
         return cardReaderService.getResult();
-
+*/
+        return null;
     }
 
     public void abortPayment(MouseEvent mouseEvent) {
-        if (cardReaderService.getStatus()=="WAITING_FOR_PAYMENT") {
+        /*if (cardReaderService.getStatus()=="WAITING_FOR_PAYMENT") {
             cardReaderService.abortPayment();
         }
+
+         */
     }
 }
