@@ -36,6 +36,11 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.github.javadev</groupId>
+			<artifactId>underscore</artifactId>
+			<version>1.79</version>
+		</dependency>
 	</dependencies>
 
 	<build>

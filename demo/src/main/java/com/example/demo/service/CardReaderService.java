@@ -12,8 +12,8 @@ public class CardReaderService {
     private final CardReaderAPI cardReaderAPI;
 
     @Autowired
-    public CardReaderService(CardReaderAPI cardReaderAPI) {
-        this.cardReaderAPI = cardReaderAPI;
+    public CardReaderService() {
+        this.cardReaderAPI = new CardReaderAPI();
     }
 
     //methods to connect API with UI controller

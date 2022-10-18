@@ -1,9 +1,12 @@
 package com.example.demo.GUI;
 
 import com.example.demo.api.CashBoxAPI;
+import com.example.demo.api.ProductCatalogAPI;
 import com.example.demo.model.Order;
 import com.example.demo.service.CardReaderService;
 import com.example.demo.service.CashBoxService;
+import javafx.fxml.FXML;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.TextFlow;
@@ -13,6 +16,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
 
+import java.io.IOException;
+
 public class CashierViewController {
 
     private CashierApplication ca;
@@ -20,6 +25,10 @@ public class CashierViewController {
     private CashBoxService cashBoxService;
     private CardReaderService cardReaderService;
     private TextFlow searchResultField;
+
+    public CashierViewController() {
+        this.cardReaderService = new CardReaderService();
+    }
 
     public void registerView(CashierApplication ca){
         this.ca=ca;
@@ -76,18 +85,18 @@ public class CashierViewController {
     //start by resetting card reader to idle
     //then call waitforpayment
     //wait until customer has completed payment (or failed to do so) and return the result
-    public String cardPayment(MouseEvent mouseEvent) {
-        /*cardReaderService.resetCardReader();
-        cardReaderService.waitForPayment(order.getAmount());
-        while(cardReaderService.getStatus()=="WAITING_FOR_PAYMENT"){
+    public void cardPayment(MouseEvent mouseEvent) {
+        cardReaderService.resetCardReader();
+        cardReaderService.waitForPayment("40");
+        /*while(cardReaderService.getStatus()=="WAITING_FOR_PAYMENT"){
             ;
         }
         if (cardReaderService.getStatus()=="IDLE"){
             return "No transaction taking place here officer";
         }
         return cardReaderService.getResult();
-*/
-        return null;
+
+         */
     }
 
     public void abortPayment(MouseEvent mouseEvent) {
@@ -96,5 +105,21 @@ public class CashierViewController {
         }
 
          */
+    }
+
+    public void OpenScanner(MouseEvent mouseEvent) throws IOException {
+        ScannerViewController scanvc = new ScannerViewController();
+        scanvc.openScanner();
+    }
+
+    @FXML
+    public TextField enterBar;
+
+    @FXML
+    public TextField searchForProduct;
+    @FXML
+    public void getBarcode(ActionEvent event) throws IOException{
+        ProductCatalogAPI pcAPI = new ProductCatalogAPI();
+        pcAPI.getProductByBarcode(enterBar.getText());
     }
 }
