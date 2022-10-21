@@ -9,16 +9,16 @@ public class Order {
 
     private String orderNumber;
     //price basically
-    private String amount;
+    private double orderTotal;
     private ArrayList<OrderLine> orderLineList;
 
-    public Order(String amount) {
-        this.amount = amount;
+    public Order(double orderTotal) {
+        this.orderTotal = orderTotal;
         this.orderLineList = new ArrayList<>();
     }
 
-    public String getAmount() {
-        return amount;
+    public double getOrderTotal() {
+        return orderTotal;
     }
 
     public void addOrderLine(OrderLine ol) {

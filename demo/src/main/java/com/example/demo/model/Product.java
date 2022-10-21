@@ -6,6 +6,7 @@ public class Product {
     private String barcode;
     private String name;
     private int VAT;
+    private double price;
     private List<String> keyWords;
 
     public Product(String barcode, String name, int VAT, List<String> keyWords) {
@@ -13,6 +14,7 @@ public class Product {
         this.name = name;
         this.VAT = VAT;
         this.keyWords = keyWords;
+
     }
 
     public Product(String barcode, String name) {
@@ -26,5 +28,14 @@ public class Product {
 
     public String getName() {
         return name;
+    }
+
+
+    public void setPrice(String barcode) {
+        if (this.barcode == "12345") {
+            this.price = 10.0;
+        } else if (this.barcode == "11111") {
+            this.price = 5;
+        }
     }
 }
