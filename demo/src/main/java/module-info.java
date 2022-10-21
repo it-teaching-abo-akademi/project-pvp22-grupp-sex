@@ -11,6 +11,8 @@ module demo {
     requires com.fasterxml.jackson.annotation;
     requires java.xml;
     requires spring.data.jpa;
+    requires java.net.http;
+    requires com.github.underscore;
 
     opens com.example.demo to javafx.fxml;
     exports com.example.demo.GUI;
