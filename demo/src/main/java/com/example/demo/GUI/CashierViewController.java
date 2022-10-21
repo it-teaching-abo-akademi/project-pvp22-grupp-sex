@@ -3,6 +3,8 @@ package com.example.demo.GUI;
 import com.example.demo.api.CashBoxAPI;
 import com.example.demo.api.ProductCatalogAPI;
 import com.example.demo.model.Order;
+import com.example.demo.model.OrderLine;
+import com.example.demo.model.OrderList;
 import com.example.demo.service.CardReaderService;
 import com.example.demo.service.CashBoxService;
 import javafx.fxml.FXML;
@@ -22,17 +24,20 @@ public class CashierViewController {
 
     private CashierApplication ca;
     private Order order;
+    private OrderList orderList;
     private CashBoxService cashBoxService;
     private CardReaderService cardReaderService;
     private TextFlow searchResultField;
 
     public CashierViewController() {
         this.cardReaderService = new CardReaderService();
+        this.orderList = new OrderList();
     }
 
     public void registerView(CashierApplication ca){
         this.ca=ca;
     }
+
 
     public void addThirtyDiscount(MouseEvent mouseEvent) {
         // return Payment.getPrice()*0.7;
