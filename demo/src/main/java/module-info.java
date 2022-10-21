@@ -13,6 +13,7 @@ module demo {
     requires spring.data.jpa;
     requires java.net.http;
     requires com.github.underscore;
+    requires java.persistence;
 
     opens com.example.demo to javafx.fxml;
     exports com.example.demo.GUI;

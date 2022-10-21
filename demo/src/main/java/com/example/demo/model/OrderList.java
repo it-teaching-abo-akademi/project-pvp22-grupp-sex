@@ -11,7 +11,14 @@ public class OrderList {
     }
 
     public String getCurrentOrderNumber() {
+        if (currentOrder == null) {
+            return null;
+        }
         return currentOrder.getCurrentOrderNumber();
+    }
+
+    public void addToCurrentOrder(OrderLine ol) {
+        currentOrder.addOrderLine(ol);
     }
 
     private void setCurrentOrder(Order currentOrder) {
