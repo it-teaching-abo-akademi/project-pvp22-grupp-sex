@@ -15,11 +15,13 @@ public class Product {
         this.VAT = VAT;
         this.keyWords = keyWords;
 
+        setPrice();
     }
 
     public Product(String barcode, String name) {
         this.barcode = barcode;
         this.name = name;
+        setPrice();
     }
 
     public String getBarcode() {
@@ -30,12 +32,16 @@ public class Product {
         return name;
     }
 
+    public double getPrice() {
+        return price;
+    }
 
-    public void setPrice(String barcode) {
-        if (this.barcode == "12345") {
-            this.price = 10.0;
-        } else if (this.barcode == "11111") {
-            this.price = 5;
+    public void setPrice() {
+        switch (barcode) {
+            case "111" -> this.price = 9.99;
+            case "222" -> this.price = 19.99;
+            case "333" -> this.price = 29.99;
+            case "420" -> this.price = 39.99;
         }
     }
 }

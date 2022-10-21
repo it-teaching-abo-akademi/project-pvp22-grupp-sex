@@ -12,8 +12,7 @@ public class Order {
     private double orderTotal;
     private ArrayList<OrderLine> orderLineList;
 
-    public Order(double orderTotal) {
-        this.orderTotal = orderTotal;
+    public Order() {
         this.orderLineList = new ArrayList<>();
     }
 
@@ -31,7 +30,8 @@ public class Order {
     public void removeOrderLineByBarcode(String barcode) {
         Optional<OrderLine> olToRemove = orderLineList.stream().filter(o -> o.getBarcode().equals(barcode)).findFirst();
         if(olToRemove.isPresent()) {
-            orderLineList.remove(olToRemove);
+            orderTotal -= olToRemove.get().getTotalPrice();
+            orderLineList.remove(olToRemove.get());
         }
     }
 

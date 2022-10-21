@@ -15,7 +15,8 @@ module demo {
     requires com.github.underscore;
     requires java.persistence;
 
-    opens com.example.demo to javafx.fxml;
+    opens com.example.demo to javafx.fxml, javafx.base;
     exports com.example.demo.GUI;
+    exports com.example.demo.model;
 
 }
