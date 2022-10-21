@@ -5,6 +5,7 @@ import com.example.demo.api.ProductCatalogAPI;
 import com.example.demo.model.Order;
 import com.example.demo.model.OrderLine;
 import com.example.demo.model.OrderList;
+import com.example.demo.model.Product;
 import com.example.demo.service.CardReaderService;
 import com.example.demo.service.CashBoxService;
 import javafx.fxml.FXML;
@@ -125,6 +126,16 @@ public class CashierViewController {
     @FXML
     public void getBarcode(ActionEvent event) throws IOException{
         ProductCatalogAPI pcAPI = new ProductCatalogAPI();
-        pcAPI.getProductByBarcode(enterBar.getText());
+        Product product = pcAPI.getProductByBarcode(enterBar.getText());
+        if(product != null) {
+            addProductToSale(product);
+        }
+    }
+
+    public void addProductToSale(Product product) {
+        String orderNum = orderList.getCurrentOrderNumber() == null ? "1" : orderList.getCurrentOrderNumber();
+        OrderLine ol = new OrderLine(orderNum, product);
+        orderList.addToCurrentOrder(ol);
+        //Add orderline to gui here
     }
 }

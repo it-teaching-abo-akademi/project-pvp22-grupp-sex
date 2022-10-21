@@ -1,5 +1,7 @@
 package com.example.demo.GUI;
 
+import com.example.demo.api.ProductCatalogAPI;
+import com.example.demo.model.Product;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -23,8 +25,11 @@ public class ScannerViewController {
 
 
     @FXML
-    public TextField scanBarcode;
+    public TextField barcodeScan;
     @FXML
     public void addProductToSale(KeyEvent keyEvent) {
+        ProductCatalogAPI pcAPI = new ProductCatalogAPI();
+        Product product = pcAPI.getProductByBarcode(barcodeScan.getText());
+        //no clue how to communicate this to CashierViewController
     }
 }
