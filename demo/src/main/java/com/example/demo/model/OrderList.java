@@ -21,7 +21,7 @@ public class OrderList {
         currentOrder.addOrderLine(ol);
     }
 
-    private void setCurrentOrder(Order currentOrder) {
+    public void setCurrentOrder(Order currentOrder) {
         this.currentOrder = currentOrder;
     }
 }
