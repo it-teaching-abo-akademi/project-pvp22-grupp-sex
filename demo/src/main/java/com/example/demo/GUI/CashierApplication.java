@@ -27,6 +27,7 @@ public class CashierApplication extends Application {
 
         FXMLLoader fxmlLoader2 = new FXMLLoader(CustomerApplication.class.getResource("/customer-view.fxml"));
         Scene scene2 = new Scene(fxmlLoader2.load(), 600, 440);
+        
         try {
             custvc.registerView(custapp);
 

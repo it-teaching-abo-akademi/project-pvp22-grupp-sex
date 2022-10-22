@@ -1,35 +1,45 @@
 package com.example.demo.GUI;
 
+import com.example.demo.api.CashBoxAPI;
+import com.example.demo.api.ProductCatalogAPI;
 import com.example.demo.model.Order;
+import com.example.demo.model.OrderLine;
+import com.example.demo.model.OrderList;
+import com.example.demo.model.Product;
 import com.example.demo.service.CardReaderService;
 import com.example.demo.service.CashBoxService;
-import javafx.scene.control.TextField;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.TextFlow;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.control.Button;
-import javafx.scene.control.Tooltip;
-import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class CashierViewController {
+public class CashierViewController implements Initializable {
 
-    public TextField amountOfMoney;
-    public Button payWithCash;
     private CashierApplication ca;
     private Order order;
+    private OrderList orderList;
     private CashBoxService cashBoxService;
     private CardReaderService cardReaderService;
-    private TextFlow searchResultField;
+    @FXML
+    public TextFlow searchResultField;
 
+    public CashierViewController() {
+        this.cardReaderService = new CardReaderService();
+        this.orderList = new OrderList();
+    }
 
     public void registerView(CashierApplication ca){
         this.ca=ca;
     }
+
 
     public void addThirtyDiscount(MouseEvent mouseEvent) {
         // return Payment.getPrice()*0.7;
@@ -61,9 +71,6 @@ public class CashierViewController {
     }
 
     public void withdrawAmountFromTotal(MouseEvent mouseEvent) {
-        amountOfMoney = new TextField();
-        amountOfMoney.getText();
-
         //return Payment.calculateToPay()- InputScanner.keyboardInput();
         //substitutes the keyboard input from the total fee of the checkout.
         // if the input doesnt equal the fee, theres either change to be given back or more to pay
@@ -78,18 +85,17 @@ public class CashierViewController {
 
     //if cashbox is closed, open it. Else, do nothing.
     public void openCashbox(MouseEvent mouseEvent) {
-        if (cashBoxService.getCashBoxStatus()=="CLOSED") {
-            cashBoxService.openCashBox();
-        }
+        CashBoxAPI cashAPI = new CashBoxAPI();
+        cashAPI.openCashbox();
     }
 
     //start by resetting card reader to idle
     //then call waitforpayment
     //wait until customer has completed payment (or failed to do so) and return the result
-    public String cardPayment(MouseEvent mouseEvent) {
+    public void cardPayment(MouseEvent mouseEvent) {
         cardReaderService.resetCardReader();
-        cardReaderService.waitForPayment(order.getAmount());
-        while(cardReaderService.getStatus()=="WAITING_FOR_PAYMENT"){
+        cardReaderService.waitForPayment("40");
+        /*while(cardReaderService.getStatus()=="WAITING_FOR_PAYMENT"){
             ;
         }
         if (cardReaderService.getStatus()=="IDLE"){
@@ -97,16 +103,70 @@ public class CashierViewController {
         }
         return cardReaderService.getResult();
 
+         */
     }
 
     public void abortPayment(MouseEvent mouseEvent) {
-        if (cardReaderService.getStatus()=="WAITING_FOR_PAYMENT") {
+        /*if (cardReaderService.getStatus()=="WAITING_FOR_PAYMENT") {
             cardReaderService.abortPayment();
         }
+
+         */
     }
 
     public void OpenScanner(MouseEvent mouseEvent) throws IOException {
-        ScannerViewController scanvc= new ScannerViewController();
+        ScannerViewController scanvc = new ScannerViewController();
         scanvc.openScanner();
+    }
+
+    @FXML
+    public TextField enterBar;
+
+    @FXML
+    public TextField searchForProduct;
+    @FXML
+    public void getBarcode(ActionEvent event) throws IOException{
+        ProductCatalogAPI pcAPI = new ProductCatalogAPI();
+        Product product = pcAPI.getProductByBarcode(enterBar.getText());
+        if(product != null) {
+            addProductToSale(product);
+        }
+    }
+    public void getProductByName(ActionEvent event) throws IOException {
+        ProductCatalogAPI pcAPI = new ProductCatalogAPI();
+        Product product = pcAPI.getProductByName(searchForProduct.getText());
+        if (product != null) {
+            addProductToSale(product);
+        }
+    }
+
+    public void addProductToSale(Product product) {
+        String orderNum = orderList.getCurrentOrderNumber() == null ? "1" : orderList.getCurrentOrderNumber();
+        OrderLine ol = new OrderLine(orderNum, product);
+        if(orderList.getCurrentOrderNumber() == null) {
+            orderList.setCurrentOrder(new Order());
+        }
+        orderList.addToCurrentOrder(ol);
+        addLineToTable(ol);
+        //Add orderline to gui here
+    }
+
+    @Override
+    public void initialize(URL arg0, ResourceBundle arg1) {
+        quantity.setCellValueFactory( new PropertyValueFactory<OrderLine, Integer>("quantity"));
+        name.setCellValueFactory( new PropertyValueFactory<OrderLine, String>("name"));
+        price.setCellValueFactory( new PropertyValueFactory<OrderLine, Double>("price"));
+    }
+    @FXML
+    public TableView<OrderLine> orderTable;
+    @FXML
+    public TableColumn<OrderLine, Integer> quantity;
+    @FXML
+    public TableColumn<OrderLine, String> name;
+    @FXML
+    public TableColumn<OrderLine, Double> price;
+    @FXML
+    public void addLineToTable(OrderLine ol) {
+        orderTable.getItems().add(ol);
     }
 }
