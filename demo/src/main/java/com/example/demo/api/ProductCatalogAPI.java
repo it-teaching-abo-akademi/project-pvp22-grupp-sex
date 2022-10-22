@@ -7,7 +7,6 @@ import com.github.underscore.*;
 
 import java.net.http.HttpResponse;
 import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 public class ProductCatalogAPI {
