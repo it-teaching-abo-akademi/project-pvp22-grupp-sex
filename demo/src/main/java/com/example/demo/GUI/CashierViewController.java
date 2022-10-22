@@ -3,6 +3,7 @@ package com.example.demo.GUI;
 import com.example.demo.model.Order;
 import com.example.demo.service.CardReaderService;
 import com.example.demo.service.CashBoxService;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.TextFlow;
@@ -11,14 +12,20 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class CashierViewController {
 
+    public TextField amountOfMoney;
+    public Button payWithCash;
     private CashierApplication ca;
     private Order order;
     private CashBoxService cashBoxService;
     private CardReaderService cardReaderService;
     private TextFlow searchResultField;
+
 
     public void registerView(CashierApplication ca){
         this.ca=ca;
@@ -54,6 +61,9 @@ public class CashierViewController {
     }
 
     public void withdrawAmountFromTotal(MouseEvent mouseEvent) {
+        amountOfMoney = new TextField();
+        amountOfMoney.getText();
+
         //return Payment.calculateToPay()- InputScanner.keyboardInput();
         //substitutes the keyboard input from the total fee of the checkout.
         // if the input doesnt equal the fee, theres either change to be given back or more to pay
@@ -93,5 +103,10 @@ public class CashierViewController {
         if (cardReaderService.getStatus()=="WAITING_FOR_PAYMENT") {
             cardReaderService.abortPayment();
         }
+    }
+
+    public void OpenScanner(MouseEvent mouseEvent) throws IOException {
+        ScannerViewController scanvc= new ScannerViewController();
+        scanvc.openScanner();
     }
 }

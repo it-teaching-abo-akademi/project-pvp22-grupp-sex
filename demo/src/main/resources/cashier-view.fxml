@@ -22,7 +22,7 @@
                 </AnchorPane>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="211.0" prefWidth="356.0">
                     <children>
-                        <Button layoutX="14.0" layoutY="172.0" mnemonicParsing="false" onMouseClicked="#withdrawAmountFromTotal" prefHeight="25.0" prefWidth="69.0" text="Cash" />
+                        <Button fx:id="payWithCash" layoutX="14.0" layoutY="172.0" mnemonicParsing="false" onMouseClicked="#withdrawAmountFromTotal" prefHeight="25.0" prefWidth="69.0" text="Cash" />
                         <Button layoutX="231.0" layoutY="172.0" mnemonicParsing="false" onMouseClicked="#cardPayment" prefHeight="25.0" prefWidth="84.0" text="Card" />
                         <VBox accessibleText="Summa:" layoutX="2.0" layoutY="-1.0" prefHeight="164.0" prefWidth="330.0">
                             <children>
@@ -95,11 +95,11 @@
                         <Button layoutX="8.0" layoutY="21.0" mnemonicParsing="false" onMouseClicked="#addThirtyDiscount" prefHeight="25.0" prefWidth="84.0" text="-30 %" />
                         <Button layoutX="8.0" layoutY="63.0" mnemonicParsing="false" onMouseClicked="#addFiftyDiscount" prefHeight="25.0" prefWidth="84.0" text="-50 %" />
                         <Button layoutX="9.0" layoutY="102.0" mnemonicParsing="false" onMouseClicked="#addSeventyDiscount" prefHeight="25.0" prefWidth="84.0" text="-70%" />
-                        <Button layoutX="117.0" layoutY="63.0" mnemonicParsing="false" onMouseClicked="#addProductToTable" prefHeight="25.0" prefWidth="149.0" text="Scan Barcode" />
+                        <Button layoutX="117.0" layoutY="63.0" mnemonicParsing="false" onMouseClicked="#OpenScanner" prefHeight="25.0" prefWidth="149.0" text="Scan Barcode" />
                         <TextField layoutX="117.0" layoutY="102.0" onKeyReleased="#barcodeSearchResults" promptText="Enter Barcode" />
-                        <TextField layoutX="308.0" layoutY="102.0" onKeyReleased="#productSearchResults" promptText="Search for product" />
+                        <TextField fx:id="searchProduct" layoutX="308.0" layoutY="102.0" onKeyReleased="#productSearchResults" promptText="Search for product" />
                   <TextField layoutX="117.0" layoutY="21.0" promptText="Amount of products" />
-                  <TextField layoutX="308.0" layoutY="21.0" promptText="Amount of money" />
+                  <TextField fx:id="amountOfMoney" layoutX="308.0" layoutY="21.0" promptText="Amount of money" />
                   <Button layoutX="308.0" layoutY="63.0" mnemonicParsing="false" onMouseClicked="#openCashbox" prefHeight="25.0" prefWidth="149.0" text="Open Cashbox" />
                     </children>
                 </AnchorPane>
