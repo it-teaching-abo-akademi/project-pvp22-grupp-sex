@@ -97,7 +97,8 @@
                         <Button layoutX="8.0" layoutY="63.0" mnemonicParsing="false" onMouseClicked="#addFiftyDiscount" prefHeight="25.0" prefWidth="84.0" text="-50 %" />
                         <Button layoutX="9.0" layoutY="102.0" mnemonicParsing="false" onMouseClicked="#addSeventyDiscount" prefHeight="25.0" prefWidth="84.0" text="-70%" />
                         <TextField fx:id="enterBar" layoutX="117.0" layoutY="102.0" onAction="#getBarcode" promptText="Enter Barcode" />
-                        <TextField fx:id="searchForProduct" layoutX="308.0" layoutY="102.0" onKeyReleased="#productSearchResults" promptText="Search for product" />
+                        <TextField fx:id="searchForProduct" layoutX="308.0" layoutY="102.0" onAction="#getProductByName" promptText="Search for product" />
+
                   <TextField layoutX="117.0" layoutY="21.0" promptText="Amount of products" />
                   <TextField layoutX="308.0" layoutY="21.0" promptText="Amount of money" />
                   <Button layoutX="308.0" layoutY="63.0" mnemonicParsing="false" onMouseClicked="#openCashbox" prefHeight="25.0" prefWidth="149.0" text="Open Cashbox" />
