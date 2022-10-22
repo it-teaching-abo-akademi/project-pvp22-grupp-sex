@@ -5,17 +5,18 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
+<?import com.example.demo.model.OrderLine?>
 <AnchorPane maxHeight="-Infinity" prefHeight="404.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.GUI.CashierViewController">
     <children>
         <SplitPane dividerPositions="0.46261160714285715" layoutY="38.0" prefHeight="213.0" prefWidth="623.0">
             <items>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                     <children>
-                        <TableView layoutX="25.0" prefHeight="210.66666666666666" prefWidth="284.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <TableView fx:id="orderTable" layoutX="25.0" prefHeight="210.66666666666666" prefWidth="284.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <columns>
-                                <TableColumn prefWidth="60.33332693576813" text="Amount" />
-                                <TableColumn prefWidth="161.66668319702148" text="Product" />
-                                <TableColumn prefWidth="61.999969482421875" text="Price (€)" />
+                                <TableColumn fx:id="quantity" prefWidth="60.33332693576813" text="Amount" />
+                                <TableColumn fx:id="name" prefWidth="161.66668319702148" text="Product" />
+                                <TableColumn fx:id="price" prefWidth="61.999969482421875" text="Price (€)" />
                             </columns>
                         </TableView>
                     </children>

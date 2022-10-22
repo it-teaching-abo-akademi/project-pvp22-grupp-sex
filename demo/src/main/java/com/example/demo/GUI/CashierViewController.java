@@ -9,26 +9,27 @@ import com.example.demo.model.Product;
 import com.example.demo.service.CardReaderService;
 import com.example.demo.service.CashBoxService;
 import javafx.fxml.FXML;
-import javafx.scene.control.TextField;
+import javafx.fxml.Initializable;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.TextFlow;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.control.Button;
-import javafx.scene.control.Tooltip;
-import javafx.scene.layout.HBox;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class CashierViewController {
+public class CashierViewController implements Initializable {
 
     private CashierApplication ca;
     private Order order;
     private OrderList orderList;
     private CashBoxService cashBoxService;
     private CardReaderService cardReaderService;
-    private TextFlow searchResultField;
+    @FXML
+    public TextFlow searchResultField;
 
     public CashierViewController() {
         this.cardReaderService = new CardReaderService();
@@ -135,7 +136,30 @@ public class CashierViewController {
     public void addProductToSale(Product product) {
         String orderNum = orderList.getCurrentOrderNumber() == null ? "1" : orderList.getCurrentOrderNumber();
         OrderLine ol = new OrderLine(orderNum, product);
+        if(orderList.getCurrentOrderNumber() == null) {
+            orderList.setCurrentOrder(new Order());
+        }
         orderList.addToCurrentOrder(ol);
+        addLineToTable(ol);
         //Add orderline to gui here
+    }
+
+    @Override
+    public void initialize(URL arg0, ResourceBundle arg1) {
+        quantity.setCellValueFactory( new PropertyValueFactory<OrderLine, Integer>("quantity"));
+        name.setCellValueFactory( new PropertyValueFactory<OrderLine, String>("name"));
+        price.setCellValueFactory( new PropertyValueFactory<OrderLine, Double>("price"));
+    }
+    @FXML
+    public TableView<OrderLine> orderTable;
+    @FXML
+    public TableColumn<OrderLine, Integer> quantity;
+    @FXML
+    public TableColumn<OrderLine, String> name;
+    @FXML
+    public TableColumn<OrderLine, Double> price;
+    @FXML
+    public void addLineToTable(OrderLine ol) {
+        orderTable.getItems().add(ol);
     }
 }

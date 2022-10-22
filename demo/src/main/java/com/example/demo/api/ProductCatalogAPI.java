@@ -7,7 +7,6 @@ import com.github.underscore.*;
 
 import java.net.http.HttpResponse;
 import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 public class ProductCatalogAPI {
@@ -22,6 +21,7 @@ public class ProductCatalogAPI {
     public Product getProductByBarcode(String barcode) {
         HttpResponse<String> response = HttpController.getRequest(useCatalog("findByBarCode/"+barcode));
         HashMap<String,Object> map = (HashMap<String, Object>) U.fromXmlMap(response.body());
+        System.out.println(response);
         HashMap<String, Object> productMap = (HashMap<String, Object>) map.get("product");
         if(productMap == null) {
             noSuchProductError(barcode);
