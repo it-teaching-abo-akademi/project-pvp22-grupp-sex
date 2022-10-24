@@ -1,8 +1,7 @@
 package com.example.demo.GUI;
 
-import com.example.demo.model.Order;
 import com.example.demo.model.OrderLine;
-import com.example.demo.model.Product;
+import javafx.fxml.FXML;
 import javafx.scene.control.TableView;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
@@ -14,7 +13,6 @@ public class CustomerViewController {
     private Text t=new Text("15");
     private TextFlow toPayField = new TextFlow(t);
 
-
     public void registerView(CustomerApplication ca){
         this.ca=ca;
     }
@@ -24,5 +22,10 @@ public class CustomerViewController {
         Text t= new Text ("15");
         toPayField.getChildren().add(t);
     }
-
+    @FXML
+    public TableView<OrderLine> customerTable;
+    @FXML
+    public void addLineToCustomerTable(OrderLine ol) {
+        customerTable.getItems().add(ol);
+    }
 }

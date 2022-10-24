@@ -30,6 +30,8 @@ public class CashierViewController implements Initializable {
     public Label statusLabel;
     @FXML
     public Label bonusCardLabel;
+    @FXML
+    public TextField cashInput;
     private CashierApplication ca;
     private final Order currentOrder;
 
@@ -51,6 +53,10 @@ public class CashierViewController implements Initializable {
     public TextField searchForProduct;
     @FXML
     public TextField productQuantity;
+    private double cashPayed;
+    private double tempTotal;
+
+    private double totalPrice1;
 
     public CashierViewController() {
         this.cardReaderService = new CardReaderService();
@@ -114,6 +120,17 @@ public class CashierViewController implements Initializable {
         cashAPI.openCashbox();
     }
 
+    public void cashPayed(ActionEvent event){
+        cashPayed = Double.parseDouble(cashInput.getText());
+        tempTotal = Double.parseDouble(toPayLabel.getText());
+        toPayLabel.setText(Double.toString(tempTotal-cashPayed));
+
+
+    }
+    public double getCash(){
+        return cashPayed;
+    }
+
     //start by resetting card reader to idle
     //then call waitforpayment
     //wait until customer has completed payment (or failed to do so) and return the result
@@ -167,6 +184,8 @@ public class CashierViewController implements Initializable {
         String orderNum = currentOrder.getOrderNumber();
         OrderLine ol = new OrderLine(orderNum, product);
         setProductQuantity(ol);
+        totalPrice1 += ol.getTotalPrice();
+        toPayLabel.setText(Double.toString(totalPrice1));
         executeCommand(new AddNewOrderLineCommand(orderTable, currentOrder, ol));
         System.out.println("current order number " + orderNum);
     }

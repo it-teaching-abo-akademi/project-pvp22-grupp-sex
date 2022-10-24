@@ -24,8 +24,6 @@ public class ScannerViewController {
         scanner.setScene(scene);
         scanner.show();
     }
-
-
     @FXML
     public TextField barcodeScan;
     @FXML
@@ -33,4 +31,5 @@ public class ScannerViewController {
         ProductCatalogAPI pcAPI = new ProductCatalogAPI();
         Product product = pcAPI.getProductByBarcode(barcodeScan.getText());
     }
+
 }
