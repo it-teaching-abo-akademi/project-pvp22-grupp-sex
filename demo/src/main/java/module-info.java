@@ -18,5 +18,6 @@ module demo {
     opens com.example.demo to javafx.fxml, javafx.base;
     exports com.example.demo.GUI;
     exports com.example.demo.model;
+    exports com.example.demo.dao;
 
 }

@@ -1,19 +1,19 @@
 package com.example.demo.model;
 
 
-import java.util.ArrayList;
-import java.util.Optional;
+import java.util.*;
 
 //class to represent one transaction, order or payment
 public class Order {
 
-    private String orderNumber;
+    private final String orderNumber;
     //price basically
     private double orderTotal;
-    private ArrayList<OrderLine> orderLineList;
+    private Set<OrderLine> orderLineSet;
 
-    public Order() {
-        this.orderLineList = new ArrayList<>();
+    public Order(String orderNumber) {
+        this.orderNumber = orderNumber;
+        this.orderLineSet = new HashSet<>();
     }
 
     public double getOrderTotal() {
@@ -21,21 +21,29 @@ public class Order {
     }
 
     public void addOrderLine(OrderLine ol) {
-        orderLineList.add(ol);
+        orderLineSet.add(ol);
     }
 
     public void removeOrderLine(OrderLine ol) {
-        orderLineList.remove(ol);
+        orderLineSet.remove(ol);
     }
     public void removeOrderLineByBarcode(String barcode) {
-        Optional<OrderLine> olToRemove = orderLineList.stream().filter(o -> o.getBarcode().equals(barcode)).findFirst();
+        Optional<OrderLine> olToRemove = orderLineSet.stream().filter(o -> o.getBarcode().equals(barcode)).findFirst();
         if(olToRemove.isPresent()) {
             orderTotal -= olToRemove.get().getTotalPrice();
-            orderLineList.remove(olToRemove.get());
+            orderLineSet.remove(olToRemove.get());
         }
     }
 
-    public String getCurrentOrderNumber() {
+    public String getOrderNumber() {
         return orderNumber;
+    }
+
+    public Set<OrderLine> getOrderLineSet() {
+        return orderLineSet;
+    }
+
+    public void setOrderLineSet(Set<OrderLine> orderLineSet) {
+        this.orderLineSet = orderLineSet;
     }
 }
