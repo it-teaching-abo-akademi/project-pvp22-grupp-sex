@@ -2,9 +2,10 @@ package com.example.demo.GUI;
 
 import com.example.demo.api.CashBoxAPI;
 import com.example.demo.api.ProductCatalogAPI;
+import com.example.demo.dao.Command;
+import com.example.demo.dao.Commands.AddNewOrderLineCommand;
 import com.example.demo.model.Order;
 import com.example.demo.model.OrderLine;
-import com.example.demo.model.OrderList;
 import com.example.demo.model.Product;
 import com.example.demo.service.CardReaderService;
 import com.example.demo.service.CashBoxService;
@@ -24,22 +25,48 @@ import java.util.ResourceBundle;
 public class CashierViewController implements Initializable {
 
     private CashierApplication ca;
-    private Order order;
-    private OrderList orderList;
+    private final Order currentOrder;
+
     private CashBoxService cashBoxService;
-    private CardReaderService cardReaderService;
+    private final CardReaderService cardReaderService;
     @FXML
     public TextFlow searchResultField;
+    @FXML
+    public TableView<OrderLine> orderTable;
+    @FXML
+    public TableColumn<OrderLine, Integer> quantity;
+    @FXML
+    public TableColumn<OrderLine, String> name;
+    @FXML
+    public TableColumn<OrderLine, Double> price;
+    @FXML
+    public TextField enterBar;
+    @FXML
+    public TextField searchForProduct;
+    @FXML
+    public TextField productQuantity;
 
     public CashierViewController() {
         this.cardReaderService = new CardReaderService();
-        this.orderList = new OrderList();
+        this.currentOrder = new Order("1");
+    }
+
+    @Override
+    public void initialize(URL arg0, ResourceBundle arg1) {
+        quantity.setCellValueFactory( new PropertyValueFactory<OrderLine, Integer>("quantity"));
+        name.setCellValueFactory( new PropertyValueFactory<OrderLine, String>("name"));
+        price.setCellValueFactory( new PropertyValueFactory<OrderLine, Double>("price"));
     }
 
     public void registerView(CashierApplication ca){
         this.ca=ca;
     }
-
+    public Order getCurrentOrder() {
+        return currentOrder;
+    }
+    public void executeCommand(Command command) {
+        command.execute();
+    }
 
     public void addThirtyDiscount(MouseEvent mouseEvent) {
         // return Payment.getPrice()*0.7;
@@ -52,14 +79,6 @@ public class CashierViewController implements Initializable {
 
     public void addSeventyDiscount(MouseEvent mouseEvent) {
         // Payment.getPrice();
-    }
-
-    public void barcodeSearchResults(KeyEvent keyEvent, String amount) {
-        //input from GUI: Manually typed barcode
-        //Takes a (list) from product catalog and returns matching product(s)
-        //adds product(s) to shopping cart
-        //if implementable, preferably first shows products and then you can add them by clicking
-        //CashierController.barcodeSearchResults(keyEvent, amount);
     }
 
     public void displayShoppingCart(){
@@ -119,11 +138,9 @@ public class CashierViewController implements Initializable {
         scanvc.openScanner();
     }
 
-    @FXML
-    public TextField enterBar;
-
-    @FXML
-    public TextField searchForProduct;
+    //input from GUI: Manually typed barcode
+    //Takes a (list) from product catalog and returns matching product(s)
+    //adds product(s) to currentOrder and updates GUI table
     @FXML
     public void getBarcode(ActionEvent event) throws IOException{
         ProductCatalogAPI pcAPI = new ProductCatalogAPI();
@@ -134,32 +151,17 @@ public class CashierViewController implements Initializable {
     }
 
     public void addProductToSale(Product product) {
-        String orderNum = orderList.getCurrentOrderNumber() == null ? "1" : orderList.getCurrentOrderNumber();
+        String orderNum = currentOrder.getOrderNumber();
         OrderLine ol = new OrderLine(orderNum, product);
-        if(orderList.getCurrentOrderNumber() == null) {
-            orderList.setCurrentOrder(new Order());
-        }
-        orderList.addToCurrentOrder(ol);
-        addLineToTable(ol);
-        //Add orderline to gui here
+        setProductQuantity(ol);
+        executeCommand(new AddNewOrderLineCommand(orderTable, currentOrder, ol));
+        System.out.println("current order number " + orderNum);
     }
 
-    @Override
-    public void initialize(URL arg0, ResourceBundle arg1) {
-        quantity.setCellValueFactory( new PropertyValueFactory<OrderLine, Integer>("quantity"));
-        name.setCellValueFactory( new PropertyValueFactory<OrderLine, String>("name"));
-        price.setCellValueFactory( new PropertyValueFactory<OrderLine, Double>("price"));
-    }
-    @FXML
-    public TableView<OrderLine> orderTable;
-    @FXML
-    public TableColumn<OrderLine, Integer> quantity;
-    @FXML
-    public TableColumn<OrderLine, String> name;
-    @FXML
-    public TableColumn<OrderLine, Double> price;
-    @FXML
-    public void addLineToTable(OrderLine ol) {
-        orderTable.getItems().add(ol);
+    private void setProductQuantity(OrderLine ol) {
+        if(!productQuantity.getText().isEmpty()) {
+            System.out.println(productQuantity.getText());
+            ol.changeQuantity(Integer.parseInt(productQuantity.getText()));
+        }
     }
 }

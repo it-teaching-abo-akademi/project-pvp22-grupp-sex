@@ -6,12 +6,12 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 
 public class OrderLine {
-    private String name;
-    private String barcode;
+    private final String name;
+    private final String barcode;
     private int quantity;
     private double price;
     private double totalPrice;
-    private String orderNumber;
+    private final String orderNumber;
 
     private SimpleIntegerProperty tableQuantity;
     private SimpleStringProperty tableName;
@@ -34,10 +34,13 @@ public class OrderLine {
         this.tableQuantity = new SimpleIntegerProperty(quantity);
     }
 
-    protected String getBarcode() {
+    public String getBarcode() {
         return barcode;
     }
 
+    public int getQuantity() {
+        return quantity;
+    }
     public void changeQuantity(int i) {
         this.quantity = i;
         this.totalPrice = quantity * price;
