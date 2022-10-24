@@ -162,4 +162,7 @@ public class CashierViewController implements Initializable {
     public void addLineToTable(OrderLine ol) {
         orderTable.getItems().add(ol);
     }
+
+
+
 }
