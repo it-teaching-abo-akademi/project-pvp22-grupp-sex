@@ -2,7 +2,6 @@ package com.example.demo.GUI;
 
 import com.example.demo.model.Order;
 import com.example.demo.model.OrderLine;
-import com.example.demo.model.OrderList;
 import com.example.demo.model.Product;
 import javafx.scene.control.TableView;
 import javafx.scene.text.Text;
