@@ -10,7 +10,7 @@ public class OrderLine {
     private String barcode;
     private int quantity;
     private double price;
-    private double totalPrice;
+    public double totalPrice;
     private String orderNumber;
 
     private SimpleIntegerProperty tableQuantity;

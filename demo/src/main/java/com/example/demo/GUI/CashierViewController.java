@@ -30,6 +30,9 @@ public class CashierViewController implements Initializable {
     private CardReaderService cardReaderService;
     @FXML
     public TextFlow searchResultField;
+    @FXML
+    public Label toPay;
+
 
     public CashierViewController() {
         this.cardReaderService = new CardReaderService();
