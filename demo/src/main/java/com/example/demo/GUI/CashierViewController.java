@@ -23,6 +23,12 @@ import java.util.ResourceBundle;
 
 public class CashierViewController implements Initializable {
 
+    @FXML
+    public Label toPayLabel;
+    @FXML
+    public Label statusLabel;
+    @FXML
+    public Label bonusCardLabel;
     private CashierApplication ca;
     private Order order;
     private OrderList orderList;

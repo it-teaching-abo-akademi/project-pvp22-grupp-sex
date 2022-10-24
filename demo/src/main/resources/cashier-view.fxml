@@ -34,11 +34,11 @@
                                         <Font name="Times New Roman Bold" size="18.0" />
                                     </font>
                                 </Text>
-                                <TextFlow maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="113.0">
-                                    <VBox.margin>
-                                        <Insets left="90.0" />
-                                    </VBox.margin>
-                                </TextFlow>
+                        <Label layoutX="5.0" prefHeight="17.0" prefWidth="50.0" fx:id="toPayLabel" >
+                           <VBox.margin>
+                              <Insets left="125.0" />
+                           </VBox.margin>
+                        </Label>
                                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Status:" underline="true">
                                     <VBox.margin>
                                         <Insets left="122.0" top="10.0" />
@@ -47,10 +47,11 @@
                                         <Font name="System Bold" size="18.0" />
                                     </font>
                                 </Text>
-                                <TextFlow maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="113.0">
-                                    <VBox.margin>
-                                        <Insets left="90.0" />
-                                    </VBox.margin></TextFlow>
+                        <Label layoutX="5.0" prefHeight="17.0" prefWidth="50.0" fx:id="statusLabel">
+                           <VBox.margin>
+                              <Insets left="125.0" />
+                           </VBox.margin>
+                        </Label>
                                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Bonus Card:" underline="true">
                                     <font>
                                         <Font name="Times New Roman Bold" size="18.0" />
@@ -59,11 +60,11 @@
                                         <Insets left="105.0" top="10.0" />
                                     </VBox.margin>
                                 </Text>
-                                <TextFlow maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="113.0">
-                                    <VBox.margin>
-                                        <Insets left="90.0" />
-                                    </VBox.margin>
-                                </TextFlow>
+                        <Label layoutX="5.0" prefHeight="17.0" prefWidth="50.0" fx:id="bonusCardLabel">
+                            <VBox.margin>
+                                <Insets left="125.0" />
+                            </VBox.margin>
+                        </Label>
                             </children></VBox>
                   <Button layoutX="102.0" layoutY="172.0" mnemonicParsing="false" onMouseClicked="#abortPayment" prefHeight="25.0" prefWidth="99.0" text="Commit Abort" />
                     </children>
