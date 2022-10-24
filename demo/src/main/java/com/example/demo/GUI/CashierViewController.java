@@ -28,8 +28,6 @@ public class CashierViewController implements Initializable {
     private OrderList orderList;
     private CashBoxService cashBoxService;
     private CardReaderService cardReaderService;
-    @FXML
-    public TextFlow searchResultField;
 
     public CashierViewController() {
         this.cardReaderService = new CardReaderService();
@@ -166,7 +164,10 @@ public class CashierViewController implements Initializable {
     @FXML
     public TableColumn<OrderLine, Double> price;
     @FXML
+    public ListView productOptions;
+    @FXML
     public void addLineToTable(OrderLine ol) {
         orderTable.getItems().add(ol);
     }
+
 }

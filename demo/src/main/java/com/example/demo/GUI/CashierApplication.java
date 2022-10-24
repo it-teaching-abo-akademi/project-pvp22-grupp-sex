@@ -29,7 +29,6 @@ public class CashierApplication extends Application {
         Scene scene2 = new Scene(fxmlLoader2.load(), 600, 440);
         
         try {
-            custvc.registerView(custapp);
 
             //open customer gui as well while you're at it
             Stage secondaryStage=new Stage();
