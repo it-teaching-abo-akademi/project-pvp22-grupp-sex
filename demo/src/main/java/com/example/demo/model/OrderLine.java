@@ -43,6 +43,7 @@ public class OrderLine {
     }
     public void changeQuantity(int i) {
         this.quantity = i;
+        this.tableQuantity = new SimpleIntegerProperty(i);
         this.totalPrice = quantity * price;
     }
 

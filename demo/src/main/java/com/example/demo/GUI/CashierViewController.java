@@ -2,15 +2,19 @@ package com.example.demo.GUI;
 
 import com.example.demo.api.CashBoxAPI;
 import com.example.demo.api.ProductCatalogAPI;
+import com.example.demo.api.ProductController;
+import com.example.demo.dao.Command;
+import com.example.demo.dao.Commands.AddNewOrderLineCommand;
+import com.example.demo.dao.Commands.RemoveOrderLineCommand;
 import com.example.demo.model.Order;
 import com.example.demo.model.OrderLine;
-import com.example.demo.model.OrderList;
 import com.example.demo.model.Product;
 import com.example.demo.service.CardReaderService;
 import com.example.demo.service.CashBoxService;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.TextFlow;
@@ -34,7 +38,6 @@ public class CashierViewController implements Initializable {
 
     private CashBoxService cashBoxService;
     private CardReaderService cardReaderService;
-    private final CardReaderService cardReaderService;
     @FXML
     public TextFlow searchResultField;
     @FXML
@@ -168,12 +171,18 @@ public class CashierViewController implements Initializable {
         OrderLine ol = new OrderLine(orderNum, product);
         setProductQuantity(ol);
         executeCommand(new AddNewOrderLineCommand(orderTable, currentOrder, ol));
-        System.out.println("current order number " + orderNum);
+    }
+
+    @FXML
+    public void removeProductFromSale(KeyEvent event) throws IOException {
+        //orderTable.getItems().clear();
+        if (event.getCode() == KeyCode.DELETE) {
+            executeCommand(new RemoveOrderLineCommand(orderTable, currentOrder));
+        }
     }
 
     private void setProductQuantity(OrderLine ol) {
         if(!productQuantity.getText().isEmpty()) {
-            System.out.println(productQuantity.getText());
             ol.changeQuantity(Integer.parseInt(productQuantity.getText()));
         }
     }

@@ -11,7 +11,7 @@
             <items>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                     <children>
-                        <TableView fx:id="orderTable" layoutX="25.0" prefHeight="210.66666666666666" prefWidth="284.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <TableView fx:id="orderTable" layoutX="25.0" onKeyPressed="#removeProductFromSale" prefHeight="210.66666666666666" prefWidth="284.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <columns>
                                 <TableColumn fx:id="quantity" prefWidth="60.33332693576813" text="Amount" />
                                 <TableColumn fx:id="name" prefWidth="161.66668319702148" text="Product" />
@@ -96,7 +96,7 @@
                         <Button layoutX="8.0" layoutY="63.0" mnemonicParsing="false" onMouseClicked="#addFiftyDiscount" prefHeight="25.0" prefWidth="84.0" text="-50 %" />
                         <Button layoutX="9.0" layoutY="102.0" mnemonicParsing="false" onMouseClicked="#addSeventyDiscount" prefHeight="25.0" prefWidth="84.0" text="-70%" />
                         <TextField fx:id="enterBar" layoutX="117.0" layoutY="102.0" onAction="#getBarcode" promptText="Enter Barcode" />
-                        <TextField fx:id="searchForProduct" layoutX="308.0" layoutY="102.0" onKeyReleased="#productSearchResults" promptText="Search for product" />
+                        <TextField fx:id="searchForProduct" layoutX="308.0" layoutY="102.0" onAction="#getProductByName" onKeyReleased="#productSearchResults" promptText="Search for product" />
                   <TextField fx:id="productQuantity" layoutX="117.0" layoutY="21.0" promptText="Amount of products" />
                   <TextField layoutX="308.0" layoutY="21.0" promptText="Amount of money" />
                   <Button layoutX="308.0" layoutY="63.0" mnemonicParsing="false" onMouseClicked="#openCashbox" prefHeight="25.0" prefWidth="149.0" text="Open Cashbox" />
