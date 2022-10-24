@@ -132,6 +132,13 @@ public class CashierViewController implements Initializable {
             addProductToSale(product);
         }
     }
+    public void getProductByName(ActionEvent event) throws IOException {
+        ProductCatalogAPI pcAPI = new ProductCatalogAPI();
+        Product product = pcAPI.getProductByName(searchForProduct.getText());
+        if (product != null) {
+            addProductToSale(product);
+        }
+    }
 
     public void addProductToSale(Product product) {
         String orderNum = orderList.getCurrentOrderNumber() == null ? "1" : orderList.getCurrentOrderNumber();

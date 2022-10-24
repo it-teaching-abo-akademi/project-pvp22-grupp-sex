@@ -44,4 +44,5 @@ public class Product {
             case "420" -> this.price = 39.99;
         }
     }
+
 }
