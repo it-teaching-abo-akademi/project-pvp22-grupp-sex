@@ -1,5 +1,8 @@
 package com.example.demo.GUI;
 
+import com.example.demo.model.OrderLine;
+import javafx.fxml.FXML;
+import javafx.scene.control.TableView;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
@@ -18,5 +21,11 @@ public class CustomerViewController {
     public void displayToPay(){
         Text t= new Text ("15");
         toPayField.getChildren().add(t);
+    }
+    @FXML
+    public TableView<OrderLine> customerTable;
+    @FXML
+    public void addLineToCustomerTable(OrderLine ol) {
+        customerTable.getItems().add(ol);
     }
 }
