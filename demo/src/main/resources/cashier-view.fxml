@@ -34,11 +34,11 @@
                                         <Font name="Times New Roman Bold" size="18.0" />
                                     </font>
                                 </Text>
-                        <Label layoutX="5.0" prefHeight="17.0" prefWidth="50.0" fx:id="toPayLabel" >
-                           <VBox.margin>
-                              <Insets left="125.0" />
-                           </VBox.margin>
-                        </Label>
+                                <TextFlow maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="113.0">
+                                    <VBox.margin>
+                                        <Insets left="90.0" />
+                                    </VBox.margin>
+                                </TextFlow>
                                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Status:" underline="true">
                                     <VBox.margin>
                                         <Insets left="122.0" top="10.0" />
@@ -47,11 +47,10 @@
                                         <Font name="System Bold" size="18.0" />
                                     </font>
                                 </Text>
-                        <Label layoutX="5.0" prefHeight="17.0" prefWidth="50.0" fx:id="statusLabel">
-                           <VBox.margin>
-                              <Insets left="125.0" />
-                           </VBox.margin>
-                        </Label>
+                                <TextFlow maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="113.0">
+                                    <VBox.margin>
+                                        <Insets left="90.0" />
+                                    </VBox.margin></TextFlow>
                                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Bonus Card:" underline="true">
                                     <font>
                                         <Font name="Times New Roman Bold" size="18.0" />
@@ -60,11 +59,11 @@
                                         <Insets left="105.0" top="10.0" />
                                     </VBox.margin>
                                 </Text>
-                        <Label layoutX="5.0" prefHeight="17.0" prefWidth="50.0" fx:id="bonusCardLabel">
-                            <VBox.margin>
-                                <Insets left="125.0" />
-                            </VBox.margin>
-                        </Label>
+                                <TextFlow maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="113.0">
+                                    <VBox.margin>
+                                        <Insets left="90.0" />
+                                    </VBox.margin>
+                                </TextFlow>
                             </children></VBox>
                   <Button layoutX="102.0" layoutY="172.0" mnemonicParsing="false" onMouseClicked="#abortPayment" prefHeight="25.0" prefWidth="99.0" text="Commit Abort" />
                     </children>
@@ -97,9 +96,8 @@
                         <Button layoutX="8.0" layoutY="63.0" mnemonicParsing="false" onMouseClicked="#addFiftyDiscount" prefHeight="25.0" prefWidth="84.0" text="-50 %" />
                         <Button layoutX="9.0" layoutY="102.0" mnemonicParsing="false" onMouseClicked="#addSeventyDiscount" prefHeight="25.0" prefWidth="84.0" text="-70%" />
                         <TextField fx:id="enterBar" layoutX="117.0" layoutY="102.0" onAction="#getBarcode" promptText="Enter Barcode" />
-                        <TextField fx:id="searchForProduct" layoutX="308.0" layoutY="102.0" onAction="#getProductByName" promptText="Search for product" />
-
-                  <TextField layoutX="117.0" layoutY="21.0" promptText="Amount of products" />
+                        <TextField fx:id="searchForProduct" layoutX="308.0" layoutY="102.0" onKeyReleased="#productSearchResults" promptText="Search for product" />
+                  <TextField fx:id="productQuantity" layoutX="117.0" layoutY="21.0" promptText="Amount of products" />
                   <TextField layoutX="308.0" layoutY="21.0" promptText="Amount of money" />
                   <Button layoutX="308.0" layoutY="63.0" mnemonicParsing="false" onMouseClicked="#openCashbox" prefHeight="25.0" prefWidth="149.0" text="Open Cashbox" />
                   <Button fx:id="scanBar" layoutX="119.0" layoutY="63.0" mnemonicParsing="false" onMouseClicked="#OpenScanner" prefHeight="25.0" prefWidth="149.0" text="Scan barcode" />
@@ -109,7 +107,7 @@
                     <children>
                         <ScrollPane prefHeight="151.33333333333334" prefWidth="131.33333333333334" vbarPolicy="ALWAYS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <content>
-                        <ListView fx:id="productOptions" prefHeight="200.0" prefWidth="200.0" />
+                        <TextFlow fx:id="searchResultField" prefHeight="137.0" prefWidth="115.0" />
                      </content></ScrollPane>
                     </children>
                 </AnchorPane>

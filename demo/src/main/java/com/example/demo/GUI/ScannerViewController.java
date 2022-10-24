@@ -13,6 +13,8 @@ import java.io.IOException;
 
 public class ScannerViewController {
 
+    public ScannerViewController(){
+    }
     public void openScanner() throws IOException {
         Stage scanner = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader(CashierApplication.class.getResource("/scanner-view.fxml"));
@@ -32,6 +34,5 @@ public class ScannerViewController {
     public void addProductToSale(KeyEvent keyEvent) {
         ProductCatalogAPI pcAPI = new ProductCatalogAPI();
         Product product = pcAPI.getProductByBarcode(barcodeScan.getText());
-        //no clue how to communicate this to CashierViewController
     }
 }
