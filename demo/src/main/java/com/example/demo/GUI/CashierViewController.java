@@ -2,10 +2,9 @@ package com.example.demo.GUI;
 
 import com.example.demo.api.CashBoxAPI;
 import com.example.demo.api.ProductCatalogAPI;
-import com.example.demo.dao.Command;
-import com.example.demo.dao.Commands.AddNewOrderLineCommand;
 import com.example.demo.model.Order;
 import com.example.demo.model.OrderLine;
+import com.example.demo.model.OrderList;
 import com.example.demo.model.Product;
 import com.example.demo.service.CardReaderService;
 import com.example.demo.service.CashBoxService;
@@ -24,10 +23,17 @@ import java.util.ResourceBundle;
 
 public class CashierViewController implements Initializable {
 
+    @FXML
+    public Label toPayLabel;
+    @FXML
+    public Label statusLabel;
+    @FXML
+    public Label bonusCardLabel;
     private CashierApplication ca;
     private final Order currentOrder;
 
     private CashBoxService cashBoxService;
+    private CardReaderService cardReaderService;
     private final CardReaderService cardReaderService;
     @FXML
     public TextFlow searchResultField;
@@ -146,6 +152,13 @@ public class CashierViewController implements Initializable {
         ProductCatalogAPI pcAPI = new ProductCatalogAPI();
         Product product = pcAPI.getProductByBarcode(enterBar.getText());
         if(product != null) {
+            addProductToSale(product);
+        }
+    }
+    public void getProductByName(ActionEvent event) throws IOException {
+        ProductCatalogAPI pcAPI = new ProductCatalogAPI();
+        Product product = pcAPI.getProductByName(searchForProduct.getText());
+        if (product != null) {
             addProductToSale(product);
         }
     }
