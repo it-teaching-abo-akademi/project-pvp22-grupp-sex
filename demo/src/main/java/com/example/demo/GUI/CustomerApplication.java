@@ -26,7 +26,7 @@ public class CustomerApplication extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(CustomerApplication.class.getResource("/customer-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 600, 440);
         try{
-            custvc.registerView(this);
+            //custvc.registerView(this);
             primaryStage.setTitle("Customer View");
             primaryStage.setScene(scene);
             //displayToPay();

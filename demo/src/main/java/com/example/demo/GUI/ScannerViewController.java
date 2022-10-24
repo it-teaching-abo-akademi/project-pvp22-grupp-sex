@@ -21,6 +21,8 @@ public class ScannerViewController {
         scanner.setTitle("Barcode Scanner");
         scanner.setScene(scene);
         scanner.show();
+
+        //FXMLLoader cashierGuiLoader = new FXMLLoader()
     }
 
 

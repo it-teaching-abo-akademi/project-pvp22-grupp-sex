@@ -5,12 +5,12 @@ import javafx.scene.text.TextFlow;
 
 public class CustomerViewController {
 
-    private CustomerApplication ca;
+    private CashierApplication ca;
 
     private Text t=new Text("15");
     private TextFlow toPayField = new TextFlow(t);
 
-    public void registerView(CustomerApplication ca){
+    public void registerView(CashierApplication ca){
         this.ca=ca;
     }
 
