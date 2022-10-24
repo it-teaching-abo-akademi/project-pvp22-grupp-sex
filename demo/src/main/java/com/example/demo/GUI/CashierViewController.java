@@ -23,16 +23,17 @@ import java.util.ResourceBundle;
 
 public class CashierViewController implements Initializable {
 
+    @FXML
+    public Label toPayLabel;
+    @FXML
+    public Label statusLabel;
+    @FXML
+    public Label bonusCardLabel;
     private CashierApplication ca;
     private Order order;
     private OrderList orderList;
     private CashBoxService cashBoxService;
     private CardReaderService cardReaderService;
-    @FXML
-    public TextFlow searchResultField;
-    @FXML
-    public Label toPay;
-
 
     public CashierViewController() {
         this.cardReaderService = new CardReaderService();
@@ -169,10 +170,10 @@ public class CashierViewController implements Initializable {
     @FXML
     public TableColumn<OrderLine, Double> price;
     @FXML
+    public ListView productOptions;
+    @FXML
     public void addLineToTable(OrderLine ol) {
         orderTable.getItems().add(ol);
     }
-
-
 
 }
