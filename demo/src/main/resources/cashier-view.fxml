@@ -34,7 +34,7 @@
                                         <Font name="Times New Roman Bold" size="18.0" />
                                     </font>
                                 </Text>
-                        <Label layoutX="5.0" prefHeight="17.0" prefWidth="50.0" fx:id="toPayLabel" >
+                        <Label fx:id="toPayLabel" layoutX="5.0" prefHeight="17.0" prefWidth="50.0">
                            <VBox.margin>
                               <Insets left="125.0" />
                            </VBox.margin>
@@ -47,7 +47,7 @@
                                         <Font name="System Bold" size="18.0" />
                                     </font>
                                 </Text>
-                        <Label layoutX="5.0" prefHeight="17.0" prefWidth="50.0" fx:id="statusLabel">
+                        <Label fx:id="statusLabel" layoutX="5.0" prefHeight="17.0" prefWidth="50.0">
                            <VBox.margin>
                               <Insets left="125.0" />
                            </VBox.margin>
@@ -60,7 +60,7 @@
                                         <Insets left="105.0" top="10.0" />
                                     </VBox.margin>
                                 </Text>
-                        <Label layoutX="5.0" prefHeight="17.0" prefWidth="50.0" fx:id="bonusCardLabel">
+                        <Label fx:id="bonusCardLabel" layoutX="5.0" prefHeight="17.0" prefWidth="50.0">
                             <VBox.margin>
                                 <Insets left="125.0" />
                             </VBox.margin>
@@ -100,7 +100,7 @@
                         <TextField fx:id="searchForProduct" layoutX="308.0" layoutY="102.0" onAction="#getProductByName" promptText="Search for product" />
 
                   <TextField layoutX="117.0" layoutY="21.0" promptText="Amount of products" />
-                  <TextField layoutX="308.0" layoutY="21.0" promptText="Amount of money" />
+                  <TextField fx:id="cashInput" layoutX="308.0" layoutY="21.0" onAction="#cashPayed" promptText="Amount of cash" />
                   <Button layoutX="308.0" layoutY="63.0" mnemonicParsing="false" onMouseClicked="#openCashbox" prefHeight="25.0" prefWidth="149.0" text="Open Cashbox" />
                   <Button fx:id="scanBar" layoutX="119.0" layoutY="63.0" mnemonicParsing="false" onMouseClicked="#OpenScanner" prefHeight="25.0" prefWidth="149.0" text="Scan barcode" />
                     </children>

@@ -29,11 +29,17 @@ public class CashierViewController implements Initializable {
     public Label statusLabel;
     @FXML
     public Label bonusCardLabel;
+    @FXML
+    public TextField cashInput;
     private CashierApplication ca;
     private Order order;
     private OrderList orderList;
     private CashBoxService cashBoxService;
     private CardReaderService cardReaderService;
+    private double cashPayed;
+    private double tempTotal;
+
+    private double totalPrice1;
 
     public CashierViewController() {
         this.cardReaderService = new CardReaderService();
@@ -91,6 +97,17 @@ public class CashierViewController implements Initializable {
     public void openCashbox(MouseEvent mouseEvent) {
         CashBoxAPI cashAPI = new CashBoxAPI();
         cashAPI.openCashbox();
+    }
+
+    public void cashPayed(ActionEvent event){
+        cashPayed = Double.parseDouble(cashInput.getText());
+        tempTotal = Double.parseDouble(toPayLabel.getText());
+        toPayLabel.setText(Double.toString(tempTotal-cashPayed));
+
+
+    }
+    public double getCash(){
+        return cashPayed;
     }
 
     //start by resetting card reader to idle
@@ -151,6 +168,8 @@ public class CashierViewController implements Initializable {
             orderList.setCurrentOrder(new Order());
         }
         orderList.addToCurrentOrder(ol);
+        totalPrice1 += ol.totalPrice;
+        toPayLabel.setText(Double.toString(totalPrice1));
         addLineToTable(ol);
         //Add orderline to gui here
     }
@@ -160,6 +179,9 @@ public class CashierViewController implements Initializable {
         quantity.setCellValueFactory( new PropertyValueFactory<OrderLine, Integer>("quantity"));
         name.setCellValueFactory( new PropertyValueFactory<OrderLine, String>("name"));
         price.setCellValueFactory( new PropertyValueFactory<OrderLine, Double>("price"));
+    }
+    public void updateTotalPrice(){
+        //toPayLabel.setText(Double.toString(ol.getTotalPrice()));
     }
     @FXML
     public TableView<OrderLine> orderTable;

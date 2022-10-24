@@ -32,6 +32,7 @@ public class OrderLine {
         this.tableName = new SimpleStringProperty(name);
         this.tablePrice = new SimpleDoubleProperty(price);
         this.tableQuantity = new SimpleIntegerProperty(quantity);
+        totalPrice = totalPrice + this.price;
     }
 
     protected String getBarcode() {
