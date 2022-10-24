@@ -1,7 +1,6 @@
 package com.example.demo.GUI;
 
 import com.example.demo.model.OrderLine;
-import com.example.demo.model.OrderList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableView;
 import javafx.scene.text.Text;

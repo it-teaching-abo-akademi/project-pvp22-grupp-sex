@@ -12,8 +12,6 @@ public class OrderLine {
     private double price;
     private double totalPrice;
     private final String orderNumber;
-    public double totalPrice;
-    private String orderNumber;
 
     private SimpleIntegerProperty tableQuantity;
     private SimpleStringProperty tableName;

@@ -2,9 +2,10 @@ package com.example.demo.GUI;
 
 import com.example.demo.api.CashBoxAPI;
 import com.example.demo.api.ProductCatalogAPI;
+import com.example.demo.dao.Command;
+import com.example.demo.dao.Commands.AddNewOrderLineCommand;
 import com.example.demo.model.Order;
 import com.example.demo.model.OrderLine;
-import com.example.demo.model.OrderList;
 import com.example.demo.model.Product;
 import com.example.demo.service.CardReaderService;
 import com.example.demo.service.CashBoxService;
@@ -35,7 +36,6 @@ public class CashierViewController implements Initializable {
     private final Order currentOrder;
 
     private CashBoxService cashBoxService;
-    private CardReaderService cardReaderService;
     private final CardReaderService cardReaderService;
     @FXML
     public TextFlow searchResultField;
@@ -184,6 +184,8 @@ public class CashierViewController implements Initializable {
         String orderNum = currentOrder.getOrderNumber();
         OrderLine ol = new OrderLine(orderNum, product);
         setProductQuantity(ol);
+        totalPrice1 += ol.getTotalPrice();
+        toPayLabel.setText(Double.toString(totalPrice1));
         executeCommand(new AddNewOrderLineCommand(orderTable, currentOrder, ol));
         System.out.println("current order number " + orderNum);
     }
