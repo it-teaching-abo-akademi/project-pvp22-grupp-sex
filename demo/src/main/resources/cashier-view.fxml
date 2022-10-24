@@ -35,11 +35,11 @@
                                         <Font name="Times New Roman Bold" size="18.0" />
                                     </font>
                                 </Text>
-                                <TextFlow maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="113.0">
+                                <Label maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="113.0">
                                     <VBox.margin>
                                         <Insets left="90.0" />
                                     </VBox.margin>
-                                </TextFlow>
+                                </Label>
                                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Status:" underline="true">
                                     <VBox.margin>
                                         <Insets left="122.0" top="10.0" />
