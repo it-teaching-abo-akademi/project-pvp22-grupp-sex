@@ -45,8 +45,6 @@ public class CashierApplication extends Application {
             e.printStackTrace();
         }
     }
-    public CashierViewController getCashvc() {
-        return cashvc;
-    }
+
 }
 

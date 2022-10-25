@@ -71,8 +71,8 @@ public class CashierViewController {
     //start by resetting card reader to idle
     //then call waitforpayment
     //wait until customer has completed payment (or failed to do so) and return the result
-    public String cardPayment(MouseEvent mouseEvent) {
-        cardReaderService.resetCardReader();
+    public void cardPayment(MouseEvent mouseEvent) {
+      /*  cardReaderService.resetCardReader();
         cardReaderService.waitForPayment(order.getAmount());
         while(cardReaderService.getStatus()=="WAITING_FOR_PAYMENT"){
             ;
@@ -80,13 +80,13 @@ public class CashierViewController {
         if (cardReaderService.getStatus()=="IDLE"){
             return "No transaction taking place here officer";
         }
-        return cardReaderService.getResult();
+        return cardReaderService.getResult();*/
 
     }
 
     public void abortPayment(MouseEvent mouseEvent) {
-        if (cardReaderService.getStatus()=="WAITING_FOR_PAYMENT") {
-            cardReaderService.abortPayment();
+       // if (cardReaderService.getStatus()=="WAITING_FOR_PAYMENT") {
+         //   cardReaderService.abortPayment();
         }
     }
-}
+

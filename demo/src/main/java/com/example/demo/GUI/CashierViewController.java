@@ -2,9 +2,10 @@ package com.example.demo.GUI;
 
 import com.example.demo.api.CashBoxAPI;
 import com.example.demo.api.ProductCatalogAPI;
+import com.example.demo.dao.Command;
+import com.example.demo.dao.Commands.AddNewOrderLineCommand;
 import com.example.demo.model.Order;
 import com.example.demo.model.OrderLine;
-import com.example.demo.model.OrderList;
 import com.example.demo.model.Product;
 import com.example.demo.service.CardReaderService;
 import com.example.demo.service.CashBoxService;
@@ -34,7 +35,6 @@ public class CashierViewController implements Initializable {
 
     private CashBoxService cashBoxService;
     private CardReaderService cardReaderService;
-    private final CardReaderService cardReaderService;
     @FXML
     public TextFlow searchResultField;
     @FXML
@@ -118,17 +118,16 @@ public class CashierViewController implements Initializable {
     //then call waitforpayment
     //wait until customer has completed payment (or failed to do so) and return the result
     public void cardPayment(MouseEvent mouseEvent) {
-        cardReaderService.resetCardReader();
+        /*cardReaderService.resetCardReader();
         cardReaderService.waitForPayment("40");
-        /*while(cardReaderService.getStatus()=="WAITING_FOR_PAYMENT"){
+        while(cardReaderService.getStatus()=="WAITING_FOR_PAYMENT"){
             ;
         }
         if (cardReaderService.getStatus()=="IDLE"){
             return "No transaction taking place here officer";
         }
-        return cardReaderService.getResult();
-
-         */
+        return cardReaderService.getResult();*/
+        cardReaderService.getResult();
     }
 
     public void abortPayment(MouseEvent mouseEvent) {

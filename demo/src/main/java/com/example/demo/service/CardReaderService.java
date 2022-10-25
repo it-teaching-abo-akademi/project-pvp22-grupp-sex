@@ -20,26 +20,26 @@ public class CardReaderService {
 
     @GetMapping
     public void getStatus() {
-        cardReaderAPI.useCardReader("status");
+        cardReaderAPI.getCardReaderStatus();
     }
 
     @GetMapping
     public void getResult() {
-        cardReaderAPI.useCardReader("result");
+        cardReaderAPI.getCardReaderResult("result");
     }
 
     @PostMapping
     public void resetCardReader() {
-        cardReaderAPI.useCardReader("reset");
+        cardReaderAPI.resetCardReader();
     }
 
     @PostMapping
     public void abortPayment() {
-        cardReaderAPI.useCardReader("abort");
+        cardReaderAPI.abortPayment();
     }
 
     @PostMapping
     public void waitForPayment(String amount) {
-        cardReaderAPI.useCardReader("waitForPayment/?"+amount);
+        cardReaderAPI.waitForPayment(amount);
     }
 }
