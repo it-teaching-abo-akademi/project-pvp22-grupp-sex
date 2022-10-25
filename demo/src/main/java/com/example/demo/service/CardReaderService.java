@@ -13,8 +13,8 @@ public class CardReaderService {
     //methods to connect API with UI controller
 
 
-    public void getStatus() {
-        cardReaderAPI.getCardReaderStatus();
+    public String getStatus() {
+        return cardReaderAPI.getCardReaderStatus();
     }
 
     public void getResult() {
