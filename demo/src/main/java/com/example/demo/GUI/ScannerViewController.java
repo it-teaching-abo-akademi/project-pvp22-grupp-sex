@@ -26,8 +26,6 @@ public class ScannerViewController {
 
         //FXMLLoader cashierGuiLoader = new FXMLLoader()
     }
-
-
     @FXML
     public TextField barcodeScan;
     @FXML
@@ -35,4 +33,5 @@ public class ScannerViewController {
         ProductCatalogAPI pcAPI = new ProductCatalogAPI();
         Product product = pcAPI.getProductByBarcode(barcodeScan.getText());
     }
+
 }

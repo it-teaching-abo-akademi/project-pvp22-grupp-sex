@@ -32,6 +32,7 @@ public class OrderLine {
         this.tableName = new SimpleStringProperty(name);
         this.tablePrice = new SimpleDoubleProperty(price);
         this.tableQuantity = new SimpleIntegerProperty(quantity);
+        totalPrice = totalPrice + this.price;
     }
 
     public String getBarcode() {
@@ -43,6 +44,7 @@ public class OrderLine {
     }
     public void changeQuantity(int i) {
         this.quantity = i;
+        this.tableQuantity = new SimpleIntegerProperty(i);
         this.totalPrice = quantity * price;
     }
 

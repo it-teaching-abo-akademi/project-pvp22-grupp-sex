@@ -5,13 +5,13 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" prefHeight="404.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.GUI.CashierViewController">
+<AnchorPane maxHeight="-Infinity" prefHeight="404.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.GUI.CashierViewController">
     <children>
         <SplitPane dividerPositions="0.46261160714285715" layoutY="38.0" prefHeight="213.0" prefWidth="623.0">
             <items>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                     <children>
-                        <TableView fx:id="orderTable" layoutX="25.0" prefHeight="210.66666666666666" prefWidth="284.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <TableView fx:id="orderTable" layoutX="25.0" onKeyPressed="#removeProductFromSale" prefHeight="210.66666666666666" prefWidth="284.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <columns>
                                 <TableColumn fx:id="quantity" prefWidth="60.33332693576813" text="Amount" />
                                 <TableColumn fx:id="name" prefWidth="161.66668319702148" text="Product" />
@@ -26,7 +26,7 @@
                         <Button layoutX="231.0" layoutY="172.0" mnemonicParsing="false" onMouseClicked="#cardPayment" prefHeight="25.0" prefWidth="84.0" text="Card" />
                         <VBox accessibleText="Summa:" layoutX="2.0" layoutY="-1.0" prefHeight="164.0" prefWidth="330.0">
                             <children>
-                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="To Pay:" textAlignment="CENTER" underline="true">
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="To Pay(€):" textAlignment="CENTER" underline="true" wrappingWidth="100.48342895507812">
                                     <VBox.margin>
                                         <Insets left="120.0" top="5.0" />
                                     </VBox.margin>
@@ -34,12 +34,15 @@
                                         <Font name="Times New Roman Bold" size="18.0" />
                                     </font>
                                 </Text>
-                                <TextFlow maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="113.0">
+                                <Label fx:id="toPayLabel" alignment="CENTER" contentDisplay="CENTER" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="165.0" textAlignment="CENTER">
                                     <VBox.margin>
                                         <Insets left="90.0" />
                                     </VBox.margin>
-                                </TextFlow>
-                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Status:" underline="true">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                                </Label>
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Status:" textAlignment="CENTER" underline="true" wrappingWidth="96.47171020507812">
                                     <VBox.margin>
                                         <Insets left="122.0" top="10.0" />
                                     </VBox.margin>
@@ -47,11 +50,11 @@
                                         <Font name="System Bold" size="18.0" />
                                     </font>
                                 </Text>
-                                <TextFlow maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="113.0">
+                                <Label maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="174.0" textAlignment="CENTER">
                                     <VBox.margin>
                                         <Insets left="90.0" />
-                                    </VBox.margin></TextFlow>
-                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Bonus Card:" underline="true">
+                                    </VBox.margin></Label>
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Bonus Card:" textAlignment="CENTER" underline="true" wrappingWidth="128.52542877197266">
                                     <font>
                                         <Font name="Times New Roman Bold" size="18.0" />
                                     </font>
@@ -59,11 +62,11 @@
                                         <Insets left="105.0" top="10.0" />
                                     </VBox.margin>
                                 </Text>
-                                <TextFlow maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="113.0">
+                                <Label maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="153.0" textAlignment="CENTER">
                                     <VBox.margin>
                                         <Insets left="90.0" />
                                     </VBox.margin>
-                                </TextFlow>
+                                </Label>
                             </children></VBox>
                   <Button layoutX="102.0" layoutY="172.0" mnemonicParsing="false" onMouseClicked="#abortPayment" prefHeight="25.0" prefWidth="99.0" text="Commit Abort" />
                     </children>
@@ -96,9 +99,9 @@
                         <Button layoutX="8.0" layoutY="63.0" mnemonicParsing="false" onMouseClicked="#addFiftyDiscount" prefHeight="25.0" prefWidth="84.0" text="-50 %" />
                         <Button layoutX="9.0" layoutY="102.0" mnemonicParsing="false" onMouseClicked="#addSeventyDiscount" prefHeight="25.0" prefWidth="84.0" text="-70%" />
                         <TextField fx:id="enterBar" layoutX="117.0" layoutY="102.0" onAction="#getBarcode" promptText="Enter Barcode" />
-                        <TextField fx:id="searchForProduct" layoutX="308.0" layoutY="102.0" onKeyReleased="#productSearchResults" promptText="Search for product" />
+                        <TextField fx:id="searchForProduct" layoutX="308.0" layoutY="102.0" onAction="#getProductByName" onKeyReleased="#productSearchResults" promptText="Search for product" />
                   <TextField fx:id="productQuantity" layoutX="117.0" layoutY="21.0" promptText="Amount of products" />
-                  <TextField layoutX="308.0" layoutY="21.0" promptText="Amount of money" />
+                  <TextField fx:id="cashInput" layoutX="308.0" layoutY="21.0" onAction="#cashPayed" promptText="Amount of money" />
                   <Button layoutX="308.0" layoutY="63.0" mnemonicParsing="false" onMouseClicked="#openCashbox" prefHeight="25.0" prefWidth="149.0" text="Open Cashbox" />
                   <Button fx:id="scanBar" layoutX="119.0" layoutY="63.0" mnemonicParsing="false" onMouseClicked="#OpenScanner" prefHeight="25.0" prefWidth="149.0" text="Scan barcode" />
                     </children>

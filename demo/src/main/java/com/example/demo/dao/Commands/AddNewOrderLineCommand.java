@@ -5,6 +5,8 @@ import com.example.demo.model.Order;
 import com.example.demo.model.OrderLine;
 import javafx.scene.control.TableView;
 
+import java.util.Optional;
+
 public class AddNewOrderLineCommand implements Command {
     private final Order currentOrder;
     private final OrderLine ol;
@@ -19,7 +21,12 @@ public class AddNewOrderLineCommand implements Command {
 
     @Override
     public void execute() {
-        String orderNr = currentOrder.getOrderNumber();
+        Optional<OrderLine> existingProduct = currentOrder.getOrderLineSet().stream().filter(o -> o.getBarcode().equals(ol.getBarcode())).findFirst();
+        if (existingProduct.isPresent()) {
+            orderTable.getItems().remove(existingProduct.get());
+            ol.changeQuantity(ol.getQuantity() + existingProduct.get().getQuantity());
+            currentOrder.removeOrderLine(existingProduct.get());
+        }
         currentOrder.addOrderLine(ol);
         orderTable.getItems().add(ol);
     }

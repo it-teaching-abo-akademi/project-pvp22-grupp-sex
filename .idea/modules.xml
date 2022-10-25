@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/GUImodule/GUImodule.iml" filepath="$PROJECT_DIR$/GUImodule/GUImodule.iml" />
       <module fileurl="file://$PROJECT_DIR$/demo/demo.iml" filepath="$PROJECT_DIR$/demo/demo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/GUImodule/.mvn/wrapper/wrapper.iml" filepath="$PROJECT_DIR$/GUImodule/.mvn/wrapper/wrapper.iml" />
     </modules>
   </component>
 </project>
