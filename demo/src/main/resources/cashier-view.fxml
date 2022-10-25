@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" prefHeight="404.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.GUI.CashierViewController">
+<AnchorPane maxHeight="-Infinity" prefHeight="404.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.GUI.CashierViewController">
     <children>
         <SplitPane dividerPositions="0.46261160714285715" layoutY="38.0" prefHeight="213.0" prefWidth="623.0">
             <items>
@@ -101,7 +101,7 @@
                         <TextField fx:id="enterBar" layoutX="117.0" layoutY="102.0" onAction="#getBarcode" promptText="Enter Barcode" />
                         <TextField fx:id="searchForProduct" layoutX="308.0" layoutY="102.0" onAction="#getProductByName" onKeyReleased="#productSearchResults" promptText="Search for product" />
                   <TextField fx:id="productQuantity" layoutX="117.0" layoutY="21.0" promptText="Amount of products" />
-                  <TextField layoutX="308.0" layoutY="21.0" promptText="Amount of money" />
+                  <TextField fx:id="cashInput" layoutX="308.0" layoutY="21.0" onAction="#cashPayed" promptText="Amount of money" />
                   <Button layoutX="308.0" layoutY="63.0" mnemonicParsing="false" onMouseClicked="#openCashbox" prefHeight="25.0" prefWidth="149.0" text="Open Cashbox" />
                   <Button fx:id="scanBar" layoutX="119.0" layoutY="63.0" mnemonicParsing="false" onMouseClicked="#OpenScanner" prefHeight="25.0" prefWidth="149.0" text="Scan barcode" />
                     </children>
