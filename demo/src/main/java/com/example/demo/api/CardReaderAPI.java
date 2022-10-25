@@ -38,11 +38,14 @@ public class CardReaderAPI {
 
     public HttpResponse<String> getCardReaderResult(String operation){
         HttpResponse<String> response = HttpController.getRequest(useCardReaderGet("result"));
+        HashMap<String, Object> map = (HashMap<String, Object>) U.fromXmlMap(response.body());
         return response;
     }
 
     public void getCardReaderStatus(){
         HttpResponse<String> response = HttpController.getRequest(useCardReaderGet("status"));
+        HashMap<String, Object> map = (HashMap<String, Object>) U.fromXmlMap(response.body());
+        System.out.println(map);
 
     }
 }

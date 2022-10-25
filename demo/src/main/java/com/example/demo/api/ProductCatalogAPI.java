@@ -25,14 +25,11 @@ public class ProductCatalogAPI {
     public Product getProductByBarcode(String barcode) {
         HttpResponse<String> response = HttpController.getRequest(useCatalog("findByBarCode/" + barcode));
         HashMap<String, Object> map = (HashMap<String, Object>) U.fromXmlMap(response.body());
-        System.out.println(response);
         HashMap<String, Object> productMap = (HashMap<String, Object>) map.get("product");
         if (productMap == null) {
             noSuchProductErrorBarcode(barcode);
             return null;
         } else {
-            System.out.println(map.get("product"));
-            System.out.println(map);
             String name = String.valueOf(productMap.get("name"));
             return new Product(barcode, name);
         }
@@ -49,7 +46,6 @@ public class ProductCatalogAPI {
     public Product getProductByName(String text) {
         HttpResponse<String> response = HttpController.getRequest(useCatalog("findByName/" + text));
         HashMap<String, Object> map = (HashMap<String, Object>) U.fromXmlMap(response.body());
-        System.out.println(response);
         HashMap<String, Object> productsMap = (HashMap<String, Object>) map.get("products");
         HashMap<String, Object> productMap = (HashMap<String, Object>) productsMap.get("product");
         if (productMap == null) {
@@ -62,8 +58,6 @@ public class ProductCatalogAPI {
                 return p;
             }
         } else {
-            System.out.println(map.get("product"));
-            System.out.println(map);
             String barcode = String.valueOf(productMap.get("barCode"));
             String name = String.valueOf(productMap.get("name"));
             return new Product(barcode, name);
@@ -73,11 +67,8 @@ public class ProductCatalogAPI {
     public Product getProductByKeyword(String text){
         HttpResponse<String> response = HttpController.getRequest(useCatalog("findByKeyword/" + text));
         HashMap<String, Object> map = (HashMap<String, Object>) U.fromXmlMap(response.body());
-        System.out.println(response);
         HashMap<String, Object> productsMap = (HashMap<String, Object>) map.get("products");
-        System.out.println(productsMap);
         HashMap<String, Object> productMap = (HashMap<String, Object>) productsMap.get("product");
-        System.out.println(productMap);
         if (productMap == null) {
             noSuchProductErrorText(text);
             return null;
