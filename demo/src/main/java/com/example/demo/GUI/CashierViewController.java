@@ -128,9 +128,18 @@ public class CashierViewController implements Initializable {
     public void cashPayed(ActionEvent event){
         cashPayed = Double.parseDouble(cashInput.getText());
         tempTotal = Double.parseDouble(toPayLabel.getText());
-        toPayLabel.setText(Double.toString(tempTotal-cashPayed));
+        toPayLabel.setText(Double.toString(round(tempTotal-cashPayed,2)));
 
 
+    }
+
+    public static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        long factor = (long) Math.pow(10, places);
+        value = value * factor;
+        long tmp = Math.round(value);
+        return (double) tmp / factor;
     }
     public double getCash(){
         return cashPayed;
@@ -189,7 +198,7 @@ public class CashierViewController implements Initializable {
         OrderLine ol = new OrderLine(orderNum, product);
         setProductQuantity(ol);
         totalPrice1 += ol.getTotalPrice();
-        toPayLabel.setText(Double.toString(totalPrice1));
+        toPayLabel.setText(Double.toString(round(totalPrice1,2)));
         executeCommand(new AddNewOrderLineCommand(orderTable, currentOrder, ol));
     }
 
