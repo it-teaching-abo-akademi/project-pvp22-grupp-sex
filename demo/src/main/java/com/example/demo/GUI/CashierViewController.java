@@ -127,7 +127,8 @@ public class CashierViewController implements Initializable {
         cashPayed = Double.parseDouble(cashInput.getText());
         tempTotal = Double.parseDouble(toPayLabel.getText());
         toPayLabel.setText(Double.toString(round(tempTotal-cashPayed,2)));
-
+        CashBoxAPI cashAPI = new CashBoxAPI();
+        cashAPI.openCashbox();
 
     }
 
