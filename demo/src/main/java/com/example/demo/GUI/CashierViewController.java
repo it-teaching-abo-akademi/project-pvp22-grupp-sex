@@ -86,13 +86,12 @@ public class CashierViewController implements Initializable {
     }
 
     public void addThirtyDiscount(MouseEvent mouseEvent) {
-        System.out.println("test");
-        System.out.println(toPayLabel.getText());
-        System.out.println(currentOrder.getOrderLineSet());
-
-        cashPayed = Double.parseDouble(cashInput.getText());
-        tempTotal = Double.parseDouble(toPayLabel.getText());
-        toPayLabel.setText(Double.toString(round(tempTotal-cashPayed,2)));
+        OrderLine newPrice = orderTable.getSelectionModel().getSelectedItem();
+        double oldPrice = orderTable.getSelectionModel().getSelectedItem().getTotalPrice();
+        newPrice.setDiscount(0.3);
+        System.out.println(oldPrice);
+        System.out.println(newPrice.getPrice());
+        toPayLabel.setText(Double.toString(round(totalPrice1-(oldPrice-newPrice.getPrice()),2)));
     }
 
 
@@ -224,4 +223,5 @@ public class CashierViewController implements Initializable {
             ol.changeQuantity(Integer.parseInt(productQuantity.getText()));
         }
     }
+
 }

@@ -64,4 +64,13 @@ public class OrderLine {
     public double getTotalPrice() {
         return totalPrice;
     }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setDiscount(double discount){
+        this.price = price * (1 - discount);
+        tablePrice.set(Math.round(price*100.0)/100.0);
+    }
 }

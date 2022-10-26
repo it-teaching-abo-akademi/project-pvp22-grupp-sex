@@ -95,7 +95,7 @@
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="151.0" prefWidth="463.0">
                     <children>
                         <Separator layoutX="100.0" layoutY="-6.0" orientation="VERTICAL" prefHeight="164.0" prefWidth="6.0" />
-                        <Button layoutX="8.0" layoutY="21.0" mnemonicParsing="false" onAction="#addThirtyDiscount" onMouseClicked="#addThirtyDiscount" prefHeight="25.0" prefWidth="84.0" text="-30 %" />
+                        <Button fx:id="thirtyDiscount" layoutX="8.0" layoutY="21.0" mnemonicParsing="false" onMouseClicked="#addThirtyDiscount" prefHeight="25.0" prefWidth="84.0" text="-30 %" />
                         <Button layoutX="8.0" layoutY="63.0" mnemonicParsing="false" onMouseClicked="#addFiftyDiscount" prefHeight="25.0" prefWidth="84.0" text="-50 %" />
                         <Button layoutX="9.0" layoutY="102.0" mnemonicParsing="false" onMouseClicked="#addSeventyDiscount" prefHeight="25.0" prefWidth="84.0" text="-70%" />
                         <TextField fx:id="enterBar" layoutX="117.0" layoutY="102.0" onAction="#getBarcode" promptText="Enter Barcode" />
