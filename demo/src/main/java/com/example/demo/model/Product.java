@@ -1,19 +1,35 @@
 package com.example.demo.model;
 
+import javax.persistence.*;
 import java.util.List;
 
+@Entity
+@Table
 public class Product {
+    @Id
+    @SequenceGenerator(
+            name = "product_sequence",
+            sequenceName = "product_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "product_sequence"
+    )
     private String barcode;
     private String name;
     private int VAT;
     private double price;
-    private List<String> keyWords;
+    //private List<String> keyWords;
+
+    public Product() {
+    }
 
     public Product(String barcode, String name, int VAT, List<String> keyWords) {
         this.barcode = barcode;
         this.name = name;
         this.VAT = VAT;
-        this.keyWords = keyWords;
+        //this.keyWords = keyWords;
 
         setPrice();
     }

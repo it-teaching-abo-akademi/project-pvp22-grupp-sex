@@ -84,16 +84,22 @@ public class CashierViewController implements Initializable {
     }
 
     public void addThirtyDiscount(MouseEvent mouseEvent) {
-        // return Payment.getPrice()*0.7;
+        System.out.println("test");
+        System.out.println(toPayLabel.getText());
+        System.out.println(currentOrder.getOrderLineSet());
+
+        cashPayed = Double.parseDouble(cashInput.getText());
+        tempTotal = Double.parseDouble(toPayLabel.getText());
+        toPayLabel.setText(Double.toString(round(tempTotal-cashPayed,2)));
     }
 
 
     public void addFiftyDiscount(MouseEvent mouseEvent) {
-        // Payment.getPrice();
+        // return Payment.getPrice()*0.5;
     }
 
     public void addSeventyDiscount(MouseEvent mouseEvent) {
-        // Payment.getPrice();
+        // return Payment.getPrice()*0.3;
     }
 
     public void displayShoppingCart(){

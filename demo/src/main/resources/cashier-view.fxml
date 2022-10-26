@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" prefHeight="404.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.GUI.CashierViewController">
+<AnchorPane maxHeight="-Infinity" prefHeight="404.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.GUI.CashierViewController">
     <children>
         <SplitPane dividerPositions="0.46261160714285715" layoutY="38.0" prefHeight="213.0" prefWidth="623.0">
             <items>
@@ -95,7 +95,7 @@
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="151.0" prefWidth="463.0">
                     <children>
                         <Separator layoutX="100.0" layoutY="-6.0" orientation="VERTICAL" prefHeight="164.0" prefWidth="6.0" />
-                        <Button layoutX="8.0" layoutY="21.0" mnemonicParsing="false" onMouseClicked="#addThirtyDiscount" prefHeight="25.0" prefWidth="84.0" text="-30 %" />
+                        <Button layoutX="8.0" layoutY="21.0" mnemonicParsing="false" onAction="#addThirtyDiscount" onMouseClicked="#addThirtyDiscount" prefHeight="25.0" prefWidth="84.0" text="-30 %" />
                         <Button layoutX="8.0" layoutY="63.0" mnemonicParsing="false" onMouseClicked="#addFiftyDiscount" prefHeight="25.0" prefWidth="84.0" text="-50 %" />
                         <Button layoutX="9.0" layoutY="102.0" mnemonicParsing="false" onMouseClicked="#addSeventyDiscount" prefHeight="25.0" prefWidth="84.0" text="-70%" />
                         <TextField fx:id="enterBar" layoutX="117.0" layoutY="102.0" onAction="#getBarcode" promptText="Enter Barcode" />

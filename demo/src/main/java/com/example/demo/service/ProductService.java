@@ -1,8 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.dao.CustomerRepository;
 import com.example.demo.dao.ProductRepository;
-import com.example.demo.model.Customer;
 import com.example.demo.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +26,10 @@ public class ProductService {
             throw new IllegalStateException("Barcode already taken");
         }
       //  productRepository.save(product);
+    }
+
+    public List<String> getProducts() {
+        return productRepository.findAll();
     }
 
    /* public List<Product> getCustomers(){
