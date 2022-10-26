@@ -4,6 +4,7 @@ import com.example.demo.api.CashBoxAPI;
 import com.example.demo.api.ProductCatalogAPI;
 import com.example.demo.api.ProductController;
 import com.example.demo.dao.Command;
+import com.example.demo.dao.Commands.AddDiscountCommand;
 import com.example.demo.dao.Commands.AddNewOrderLineCommand;
 import com.example.demo.dao.Commands.RemoveOrderLineCommand;
 import com.example.demo.dao.Command;
@@ -15,20 +16,29 @@ import com.example.demo.service.CardReaderService;
 import com.example.demo.service.CashBoxService;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.TextFlow;
 import javafx.event.ActionEvent;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class CashierViewController implements Initializable {
 
+    @FXML
+    public AnchorPane scannerView;
+    @FXML
+    public ScannerViewController scannerViewController;
     @FXML
     public Label toPayLabel;
     @FXML
@@ -54,6 +64,8 @@ public class CashierViewController implements Initializable {
     public TableColumn<OrderLine, Double> price;
     @FXML
     public TextField enterBar;
+    @FXML
+    public Button scanBar;
     @FXML
     public TextField searchForProduct;
     @FXML
@@ -85,22 +97,47 @@ public class CashierViewController implements Initializable {
         command.execute();
     }
 
-    public void addThirtyDiscount(MouseEvent mouseEvent) {
-        OrderLine newPrice = orderTable.getSelectionModel().getSelectedItem();
-        double oldPrice = orderTable.getSelectionModel().getSelectedItem().getTotalPrice();
-        newPrice.setDiscount(0.3);
-        System.out.println(oldPrice);
-        System.out.println(newPrice.getPrice());
-        toPayLabel.setText(Double.toString(round(totalPrice1-(oldPrice-newPrice.getPrice()),2)));
+    public boolean orderLineExist(OrderLine orderLine){
+        if (orderTable.getItems().contains(orderLine)){
+            return true;
+        }
+        return false;
     }
 
+    public void addThirtyDiscount(MouseEvent mouseEvent) {
+        addDiscount(0.3);
+    }
 
     public void addFiftyDiscount(MouseEvent mouseEvent) {
-        // return Payment.getPrice()*0.5;
+        addDiscount(0.5);
     }
 
     public void addSeventyDiscount(MouseEvent mouseEvent) {
-        // return Payment.getPrice()*0.3;
+        addDiscount(0.7);
+    }
+
+    private void addDiscount(double discount) {
+        OrderLine selectedProduct = orderTable.getSelectionModel().getSelectedItem();
+        int quantityToDiscount = productQuantity.getText().isBlank() ? selectedProduct.getQuantity() : Integer.parseInt(productQuantity.getText());
+        executeCommand(new AddDiscountCommand(orderTable, currentOrder, quantityToDiscount, discount));
+        updateTotalPrice(quantityToDiscount * selectedProduct.getPrice() * discount, false);
+    }
+
+    public void updateTotalPrice(double priceChange, boolean positive) {
+        if(positive) {
+            totalPrice1 = round(totalPrice1 + priceChange, 2);
+            this.toPayLabel.setText(Double.toString(totalPrice1));
+        }
+        else {
+            totalPrice1 = round(sub(totalPrice1, priceChange), 2);
+            this.toPayLabel.setText(Double.toString(totalPrice1));
+        }
+    }
+
+    public double sub(double one, double two) {
+        BigDecimal b1 = new BigDecimal(Double.toString(one));
+        BigDecimal b2 = new BigDecimal(Double.toString(two));
+        return b1.subtract(b2).doubleValue();
     }
 
     public void displayShoppingCart(){
@@ -176,9 +213,8 @@ public class CashierViewController implements Initializable {
         }
     }
 
-    public void OpenScanner(MouseEvent mouseEvent) throws IOException {
-        ScannerViewController scanvc = new ScannerViewController();
-        scanvc.openScanner();
+    public void openScanner(MouseEvent mouseEvent) throws IOException {
+        scannerViewController.openScanner();
     }
 
     //input from GUI: Manually typed barcode
@@ -204,8 +240,7 @@ public class CashierViewController implements Initializable {
         String orderNum = currentOrder.getOrderNumber();
         OrderLine ol = new OrderLine(orderNum, product);
         setProductQuantity(ol);
-        totalPrice1 += ol.getTotalPrice();
-        toPayLabel.setText(Double.toString(round(totalPrice1,2)));
+        updateTotalPrice(ol.getTotalPrice(), true);
         executeCommand(new AddNewOrderLineCommand(orderTable, currentOrder, ol));
     }
 
@@ -214,6 +249,7 @@ public class CashierViewController implements Initializable {
         //orderTable.getItems().clear();
         if (event.getCode() == KeyCode.DELETE) {
             executeCommand(new RemoveOrderLineCommand(orderTable, currentOrder));
+            updateTotalPrice(orderTable.getSelectionModel().getSelectedItem().getTotalPrice(), false);
         }
     }
 

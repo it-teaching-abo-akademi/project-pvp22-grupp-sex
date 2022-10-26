@@ -11,16 +11,23 @@ public class OrderLine {
     private int quantity;
     private double price;
     private double totalPrice;
+    private double discount;
     private final String orderNumber;
 
     private SimpleIntegerProperty tableQuantity;
     private SimpleStringProperty tableName;
     private SimpleDoubleProperty tablePrice;
-    public OrderLine(String orderNumber, String barcode, int quantity, String name) {
+    public OrderLine(String orderNumber, OrderLine ol) {
         this.orderNumber = orderNumber;
-        this.name = name;
-        this.barcode = barcode;
-        this.quantity = quantity;
+        this.name = ol.name;
+        this.barcode = ol.getBarcode();
+        this.quantity = ol.getQuantity();
+        this.price = ol.getPrice();
+        this.discount = 1;
+        this.tableName = new SimpleStringProperty(name);
+        this.tablePrice = new SimpleDoubleProperty(price);
+        this.tableQuantity = new SimpleIntegerProperty(quantity);
+        totalPrice = totalPrice + this.price;
     }
 
     public OrderLine(String orderNumber, Product product) {
@@ -29,10 +36,11 @@ public class OrderLine {
         this.barcode = product.getBarcode();
         this.price = product.getPrice();
         this.quantity = 1;
+        this.discount = 0;
         this.tableName = new SimpleStringProperty(name);
         this.tablePrice = new SimpleDoubleProperty(price);
         this.tableQuantity = new SimpleIntegerProperty(quantity);
-        totalPrice = totalPrice + this.price;
+        totalPrice = totalPrice + price;
     }
 
     public String getBarcode() {
@@ -45,7 +53,7 @@ public class OrderLine {
     public void changeQuantity(int i) {
         this.quantity = i;
         this.tableQuantity = new SimpleIntegerProperty(i);
-        this.totalPrice = quantity * price;
+        this.totalPrice = (1-discount)*quantity * price;
     }
 
     public SimpleDoubleProperty priceProperty() {
@@ -69,8 +77,14 @@ public class OrderLine {
         return price;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public void setDiscount(double discount){
+        this.discount = discount;
         this.price = price * (1 - discount);
         tablePrice.set(Math.round(price*100.0)/100.0);
+        totalPrice = quantity*price*(1-discount);
     }
 }

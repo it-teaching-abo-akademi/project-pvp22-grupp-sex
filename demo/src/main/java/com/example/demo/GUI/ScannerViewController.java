@@ -8,10 +8,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 import java.io.IOException;
 
 public class ScannerViewController {
+
+    @FXML
+    public TextField barcodeScan;
 
     public ScannerViewController(){
     }
@@ -26,8 +30,6 @@ public class ScannerViewController {
 
         //FXMLLoader cashierGuiLoader = new FXMLLoader()
     }
-    @FXML
-    public TextField barcodeScan;
     @FXML
     public void addProductToSale(KeyEvent keyEvent) {
         ProductCatalogAPI pcAPI = new ProductCatalogAPI();

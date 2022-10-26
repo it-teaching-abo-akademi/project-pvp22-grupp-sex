@@ -21,7 +21,6 @@ public class Order {
     }
 
     public void addOrderLine(OrderLine ol) {
-
         orderLineSet.add(ol);
     }
 

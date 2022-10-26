@@ -17,5 +17,6 @@ public class RemoveOrderLineCommand implements Command {
     public void execute() {
         OrderLine olToRemove = orderTable.getSelectionModel().getSelectedItem();
         orderTable.getItems().remove(olToRemove);
+        currentOrder.removeOrderLine(olToRemove);
     }
 }
