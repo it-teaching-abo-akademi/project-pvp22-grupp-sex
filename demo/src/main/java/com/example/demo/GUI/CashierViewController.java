@@ -6,6 +6,8 @@ import com.example.demo.api.ProductController;
 import com.example.demo.dao.Command;
 import com.example.demo.dao.Commands.AddNewOrderLineCommand;
 import com.example.demo.dao.Commands.RemoveOrderLineCommand;
+import com.example.demo.dao.Command;
+import com.example.demo.dao.Commands.AddNewOrderLineCommand;
 import com.example.demo.model.Order;
 import com.example.demo.model.OrderLine;
 import com.example.demo.model.Product;
@@ -117,6 +119,24 @@ public class CashierViewController implements Initializable {
         // should return double
     }
 
+    //start by resetting card reader to idle
+    //then call waitforpayment
+    //wait until customer has completed payment (or failed to do so) and return the result
+    public void cardPayment(MouseEvent mouseEvent){
+        cardReaderService.resetCardReader();
+        cardReaderService.waitForPayment(toPayLabel.getText());
+        String status = cardReaderService.getStatus();
+        while (status=="WAITING_FOR_PAYMENT") {
+
+        }
+        if (cardReaderService.getStatus()=="IDLE"){
+            System.out.println("No transaction taking place");
+        }
+        else {
+            cardReaderService.getResult();
+        }
+    }
+
     public void addProductToTable(MouseEvent mouseEvent) {
     }
 
@@ -133,7 +153,8 @@ public class CashierViewController implements Initializable {
         cashPayed = Double.parseDouble(cashInput.getText());
         tempTotal = Double.parseDouble(toPayLabel.getText());
         toPayLabel.setText(Double.toString(round(tempTotal-cashPayed,2)));
-
+        CashBoxAPI cashAPI = new CashBoxAPI();
+        cashAPI.openCashbox();
 
     }
 
@@ -149,29 +170,11 @@ public class CashierViewController implements Initializable {
         return cashPayed;
     }
 
-    //start by resetting card reader to idle
-    //then call waitforpayment
-    //wait until customer has completed payment (or failed to do so) and return the result
-    public void cardPayment(MouseEvent mouseEvent) {
-        cardReaderService.resetCardReader();
-        cardReaderService.waitForPayment("40");
-        /*while(cardReaderService.getStatus()=="WAITING_FOR_PAYMENT"){
-            ;
-        }
-        if (cardReaderService.getStatus()=="IDLE"){
-            return "No transaction taking place here officer";
-        }
-        return cardReaderService.getResult();
-
-         */
-    }
 
     public void abortPayment(MouseEvent mouseEvent) {
-        /*if (cardReaderService.getStatus()=="WAITING_FOR_PAYMENT") {
+        if (cardReaderService.getStatus()=="WAITING_FOR_PAYMENT") {
             cardReaderService.abortPayment();
         }
-
-         */
     }
 
     public void OpenScanner(MouseEvent mouseEvent) throws IOException {
@@ -217,6 +220,7 @@ public class CashierViewController implements Initializable {
 
     private void setProductQuantity(OrderLine ol) {
         if(!productQuantity.getText().isEmpty()) {
+            System.out.println(productQuantity.getText());
             ol.changeQuantity(Integer.parseInt(productQuantity.getText()));
         }
     }
