@@ -121,7 +121,7 @@ public class CashierViewController implements Initializable {
         OrderLine selectedProduct = ca_orderTable.getSelectionModel().getSelectedItem();
         int quantityToDiscount = productQuantity.getText().isBlank() ? selectedProduct.getQuantity() : Integer.parseInt(productQuantity.getText());
         TableView<OrderLine> cu = customerViewController.getCustomerTable();
-        executeCommand(new AddDiscountCommand(cu, ca_orderTable, currentOrder, quantityToDiscount, discount));
+        executeCommand(new AddDiscountCommand(cu, ca_orderTable, currentOrder,selectedProduct, quantityToDiscount, discount));
         updateTotalPrice(quantityToDiscount * selectedProduct.getPrice() * discount, false);
     }
 
@@ -263,9 +263,11 @@ public class CashierViewController implements Initializable {
     @FXML
     public void removeProductFromSale(KeyEvent event) throws IOException {
         if (event.getCode() == KeyCode.DELETE) {
+            int quantityToRemove = Integer.parseInt(productQuantity.getText());
+            double priceChange = quantityToRemove*ca_orderTable.getSelectionModel().getSelectedItem().getTotalPrice()/ca_orderTable.getSelectionModel().getSelectedItem().getQuantity();
             TableView<OrderLine> cu = customerViewController.getCustomerTable();
-            executeCommand(new RemoveOrderLineCommand(cu, ca_orderTable, currentOrder));
-            updateTotalPrice(ca_orderTable.getSelectionModel().getSelectedItem().getTotalPrice(), false);
+            executeCommand(new RemoveOrderLineCommand(cu, ca_orderTable, currentOrder, quantityToRemove));
+            updateTotalPrice(priceChange, false);
         }
     }
 

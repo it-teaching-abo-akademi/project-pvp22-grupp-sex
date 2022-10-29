@@ -11,20 +11,21 @@ public class AddDiscountCommand implements Command {
     private CustomerViewController customerViewController;
     private final Order currentOrder;
     private final TableView<OrderLine> orderTable2;
+    private OrderLine ol;
     private int quantity;
     private final double discount;
 
-    public AddDiscountCommand(TableView<OrderLine> orderTable2, TableView<OrderLine> orderTable, Order currentOrder, int quantity, double discount) {
+    public AddDiscountCommand(TableView<OrderLine> orderTable2, TableView<OrderLine> orderTable, Order currentOrder, OrderLine ol, int quantity, double discount) {
         this.orderTable2 = orderTable2;
         this.orderTable = orderTable;
         this.currentOrder = currentOrder;
+        this.ol = ol;
         this.quantity = quantity;
         this.discount = discount;
     }
 
     @Override
     public void execute() {
-        OrderLine ol = orderTable.getSelectionModel().getSelectedItem();
 
         orderTable2.getItems().remove(ol);
         orderTable.getItems().remove(ol);
@@ -37,12 +38,12 @@ public class AddDiscountCommand implements Command {
         OrderLine discountedProducts = new OrderLine(currentOrder.getOrderNumber(), ol);
         discountedProducts.changeQuantity(quantity);
         discountedProducts.setDiscount(discount);
-        ol.changeQuantity(ol.getQuantity() - quantity);
+        ol.changeQuantity(ol.getQuantity()-quantity);
+        System.out.println(ol.getQuantity());
 
         if(ol.getQuantity() != 0) {
-            currentOrder.addOrderLine(ol);
-            orderTable2.getItems().add(ol);
-            orderTable.getItems().add(ol);
+            AddNewOrderLineCommand addCommand = new AddNewOrderLineCommand(orderTable2, orderTable, currentOrder, ol);
+            addCommand.execute();
         }
 
         AddNewOrderLineCommand addCommand = new AddNewOrderLineCommand(orderTable2, orderTable, currentOrder, discountedProducts);

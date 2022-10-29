@@ -23,13 +23,13 @@ public class AddNewOrderLineCommand implements Command {
 
     @Override
     public void execute() {
-        Optional<OrderLine> existingProduct = currentOrder.getOrderLineSet().stream().filter(o -> o.getBarcode().equals(ol.getBarcode())).findFirst();
-        if (existingProduct.isPresent() && existingProduct.get().getPrice() == ol.getPrice()) {
+        Optional<OrderLine> existingProduct = currentOrder.getOrderLineSet().stream().filter(o -> o.getBarcode().equals(ol.getBarcode()) && (Double.toString(o.getDiscount())).equals(Double.toString(ol.getDiscount()))).findFirst();
+        if (existingProduct.isPresent()) {
             System.out.println("in");
             orderTable2.getItems().remove(existingProduct.get());
             orderTable.getItems().remove(existingProduct.get());
-            ol.changeQuantity(ol.getQuantity() + existingProduct.get().getQuantity());
             currentOrder.removeOrderLine(existingProduct.get());
+            ol.changeQuantity(ol.getQuantity() + existingProduct.get().getQuantity());
         }
         System.out.println("out");
         currentOrder.addOrderLine(ol);

@@ -23,9 +23,9 @@ public class OrderLine {
         this.barcode = ol.getBarcode();
         this.quantity = ol.getQuantity();
         this.price = ol.getPrice();
-        this.discount = 1;
+        this.discount = 0;
         this.tableName = new SimpleStringProperty(name);
-        this.tablePrice = new SimpleDoubleProperty(price);
+        this.tablePrice = new SimpleDoubleProperty(totalPrice);
         this.tableQuantity = new SimpleIntegerProperty(quantity);
         totalPrice = totalPrice + this.price;
     }
@@ -53,7 +53,8 @@ public class OrderLine {
     public void changeQuantity(int i) {
         this.quantity = i;
         this.tableQuantity = new SimpleIntegerProperty(i);
-        this.totalPrice = (1-discount)*quantity * price;
+        this.totalPrice = (1-discount)*quantity*price;
+        tablePrice.set(Math.round(totalPrice*100.0)/100.0);
     }
 
     public SimpleDoubleProperty priceProperty() {
@@ -83,8 +84,11 @@ public class OrderLine {
 
     public void setDiscount(double discount){
         this.discount = discount;
-        this.price = price * (1 - discount);
-        tablePrice.set(Math.round(price*100.0)/100.0);
         totalPrice = quantity*price*(1-discount);
+        tablePrice.set(Math.round(totalPrice*100.0)/100.0);
+    }
+
+    public double getDiscount() {
+        return discount;
     }
 }
