@@ -61,4 +61,10 @@ public class Product {
         }
     }
 
+    //Barcode, Price
+    /*Map<String, Double> pricemap;
+
+    pricemap.get("111")
+    pricemap.put("111", 29.0)
+     */
 }

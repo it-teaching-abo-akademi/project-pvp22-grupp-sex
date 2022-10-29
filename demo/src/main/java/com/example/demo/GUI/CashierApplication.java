@@ -18,16 +18,17 @@ public class CashierApplication extends Application {
     public void start(Stage primaryStage) throws IOException {
         //register both guis
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/cashier-view.fxml"));
-        CashierViewController cashvc=fxmlLoader.getController();
 
         FXMLLoader fxmlLoader2 = new FXMLLoader(getClass().getResource("/customer-view.fxml"));
-        CustomerViewController custvc= fxmlLoader2.getController();
-
-
-
 
         Scene scene = new Scene(fxmlLoader.load(), 623, 404);
         Scene scene2 = new Scene(fxmlLoader2.load(), 600, 440);
+        CashierViewController cashvc=fxmlLoader.getController();
+        CustomerViewController custvc= fxmlLoader2.getController();
+
+        cashvc.registerController(custvc);
+        custvc.registerController(cashvc);
+
         try {
 
             //open customer gui as well while you're at it
@@ -47,4 +48,3 @@ public class CashierApplication extends Application {
     }
 
 }
-

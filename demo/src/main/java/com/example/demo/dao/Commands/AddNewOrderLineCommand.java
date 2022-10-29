@@ -12,8 +12,10 @@ public class AddNewOrderLineCommand implements Command {
     private final OrderLine ol;
 
     private final TableView<OrderLine> orderTable;
+    private final TableView<OrderLine> orderTable2;
 
-    public AddNewOrderLineCommand(TableView<OrderLine> orderTable, Order currentOrder, OrderLine orderLine) {
+    public AddNewOrderLineCommand(TableView<OrderLine> orderTable2, TableView<OrderLine> orderTable, Order currentOrder, OrderLine orderLine) {
+        this.orderTable2 = orderTable2;
         this.orderTable = orderTable;
         this.currentOrder = currentOrder;
         this.ol = orderLine;
@@ -24,6 +26,7 @@ public class AddNewOrderLineCommand implements Command {
         Optional<OrderLine> existingProduct = currentOrder.getOrderLineSet().stream().filter(o -> o.getBarcode().equals(ol.getBarcode())).findFirst();
         if (existingProduct.isPresent() && existingProduct.get().getPrice() == ol.getPrice()) {
             System.out.println("in");
+            orderTable2.getItems().remove(existingProduct.get());
             orderTable.getItems().remove(existingProduct.get());
             ol.changeQuantity(ol.getQuantity() + existingProduct.get().getQuantity());
             currentOrder.removeOrderLine(existingProduct.get());
@@ -31,5 +34,6 @@ public class AddNewOrderLineCommand implements Command {
         System.out.println("out");
         currentOrder.addOrderLine(ol);
         orderTable.getItems().add(ol);
+        orderTable2.getItems().add(ol);
     }
 }

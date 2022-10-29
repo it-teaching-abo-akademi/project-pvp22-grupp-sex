@@ -11,11 +11,11 @@
             <items>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                     <children>
-                        <TableView fx:id="orderTable" layoutX="25.0" onKeyPressed="#removeProductFromSale" prefHeight="210.66666666666666" prefWidth="284.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <TableView fx:id="ca_orderTable" layoutX="25.0" onKeyPressed="#removeProductFromSale" prefHeight="210.66666666666666" prefWidth="284.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <columns>
-                                <TableColumn fx:id="quantity" prefWidth="60.33332693576813" text="Amount" />
-                                <TableColumn fx:id="name" prefWidth="161.66668319702148" text="Product" />
-                                <TableColumn fx:id="price" prefWidth="61.999969482421875" text="Price (€)" />
+                                <TableColumn fx:id="ca_quantity" prefWidth="60.33332693576813" text="Amount" />
+                                <TableColumn fx:id="ca_name" prefWidth="161.66668319702148" text="Product" />
+                                <TableColumn fx:id="ca_price" prefWidth="61.999969482421875" text="Price (€)" />
                             </columns>
                         </TableView>
                     </children>

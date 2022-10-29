@@ -48,6 +48,7 @@ public class CashierViewController implements Initializable {
     @FXML
     public TextField cashInput;
     private CashierApplication ca;
+    private CustomerViewController customerViewController;
     private final Order currentOrder;
 
     private CashBoxService cashBoxService;
@@ -55,13 +56,13 @@ public class CashierViewController implements Initializable {
     @FXML
     public TextFlow searchResultField;
     @FXML
-    public TableView<OrderLine> orderTable;
+    public TableView<OrderLine> ca_orderTable;
     @FXML
-    public TableColumn<OrderLine, Integer> quantity;
+    public TableColumn<OrderLine, Integer> ca_quantity;
     @FXML
-    public TableColumn<OrderLine, String> name;
+    public TableColumn<OrderLine, String> ca_name;
     @FXML
-    public TableColumn<OrderLine, Double> price;
+    public TableColumn<OrderLine, Double> ca_price;
     @FXML
     public TextField enterBar;
     @FXML
@@ -82,9 +83,9 @@ public class CashierViewController implements Initializable {
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        quantity.setCellValueFactory( new PropertyValueFactory<OrderLine, Integer>("quantity"));
-        name.setCellValueFactory( new PropertyValueFactory<OrderLine, String>("name"));
-        price.setCellValueFactory( new PropertyValueFactory<OrderLine, Double>("price"));
+        ca_quantity.setCellValueFactory( new PropertyValueFactory<OrderLine, Integer>("quantity"));
+        ca_name.setCellValueFactory( new PropertyValueFactory<OrderLine, String>("name"));
+        ca_price.setCellValueFactory( new PropertyValueFactory<OrderLine, Double>("price"));
     }
 
     public void registerView(CashierApplication ca){
@@ -98,7 +99,7 @@ public class CashierViewController implements Initializable {
     }
 
     public boolean orderLineExist(OrderLine orderLine){
-        if (orderTable.getItems().contains(orderLine)){
+        if (ca_orderTable.getItems().contains(orderLine)){
             return true;
         }
         return false;
@@ -117,21 +118,23 @@ public class CashierViewController implements Initializable {
     }
 
     private void addDiscount(double discount) {
-        OrderLine selectedProduct = orderTable.getSelectionModel().getSelectedItem();
+        OrderLine selectedProduct = ca_orderTable.getSelectionModel().getSelectedItem();
         int quantityToDiscount = productQuantity.getText().isBlank() ? selectedProduct.getQuantity() : Integer.parseInt(productQuantity.getText());
-        executeCommand(new AddDiscountCommand(orderTable, currentOrder, quantityToDiscount, discount));
+        TableView<OrderLine> cu = customerViewController.getCustomerTable();
+        executeCommand(new AddDiscountCommand(cu, ca_orderTable, currentOrder, quantityToDiscount, discount));
         updateTotalPrice(quantityToDiscount * selectedProduct.getPrice() * discount, false);
     }
 
     public void updateTotalPrice(double priceChange, boolean positive) {
+        Label cu_label = customerViewController.getToPayField();
         if(positive) {
             totalPrice1 = round(totalPrice1 + priceChange, 2);
-            this.toPayLabel.setText(Double.toString(totalPrice1));
         }
         else {
             totalPrice1 = round(sub(totalPrice1, priceChange), 2);
-            this.toPayLabel.setText(Double.toString(totalPrice1));
         }
+        this.toPayLabel.setText(Double.toString(totalPrice1));
+        cu_label.setText(Double.toString(totalPrice1));
     }
 
     public double sub(double one, double two) {
@@ -189,6 +192,8 @@ public class CashierViewController implements Initializable {
         cashPayed = Double.parseDouble(cashInput.getText());
         tempTotal = Double.parseDouble(toPayLabel.getText());
         toPayLabel.setText(Double.toString(round(tempTotal-cashPayed,2)));
+        Label cu_label = customerViewController.getToPayField();
+        cu_label.setText(Double.toString(round(tempTotal-cashPayed,2)));
         CashBoxAPI cashAPI = new CashBoxAPI();
         cashAPI.openCashbox();
 
@@ -228,6 +233,16 @@ public class CashierViewController implements Initializable {
             addProductToSale(product);
         }
     }
+
+    /*
+    private void addToCustomer(OrderLine ol) {
+        customerViewController.addLineToCustomerTable(ol);
+    }
+    private void removeFromCustomer(OrderLine ol) {
+        customerViewController.removeLineFromCustomerTable(ol);
+    }
+     */
+
     public void getProductByName(ActionEvent event) throws IOException {
         ProductCatalogAPI pcAPI = new ProductCatalogAPI();
         Product product = pcAPI.getProductByName(searchForProduct.getText());
@@ -241,15 +256,16 @@ public class CashierViewController implements Initializable {
         OrderLine ol = new OrderLine(orderNum, product);
         setProductQuantity(ol);
         updateTotalPrice(ol.getTotalPrice(), true);
-        executeCommand(new AddNewOrderLineCommand(orderTable, currentOrder, ol));
+        TableView<OrderLine> cu = customerViewController.getCustomerTable();
+        executeCommand(new AddNewOrderLineCommand(cu, ca_orderTable, currentOrder, ol));
     }
 
     @FXML
     public void removeProductFromSale(KeyEvent event) throws IOException {
-        //orderTable.getItems().clear();
         if (event.getCode() == KeyCode.DELETE) {
-            executeCommand(new RemoveOrderLineCommand(orderTable, currentOrder));
-            updateTotalPrice(orderTable.getSelectionModel().getSelectedItem().getTotalPrice(), false);
+            TableView<OrderLine> cu = customerViewController.getCustomerTable();
+            executeCommand(new RemoveOrderLineCommand(cu, ca_orderTable, currentOrder));
+            updateTotalPrice(ca_orderTable.getSelectionModel().getSelectedItem().getTotalPrice(), false);
         }
     }
 
@@ -258,6 +274,10 @@ public class CashierViewController implements Initializable {
             System.out.println(productQuantity.getText());
             ol.changeQuantity(Integer.parseInt(productQuantity.getText()));
         }
+    }
+
+    public void registerController(CustomerViewController customerViewController){
+        this.customerViewController = customerViewController;
     }
 
 }
