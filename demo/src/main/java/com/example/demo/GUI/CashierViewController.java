@@ -133,8 +133,9 @@ public class CashierViewController implements Initializable {
         else {
             totalPrice1 = round(sub(totalPrice1, priceChange), 2);
         }
-        this.toPayLabel.setText(Double.toString(totalPrice1));
-        cu_label.setText(Double.toString(totalPrice1));
+        String price = totalPrice1 == 0.0 ? "" : Double.toString(totalPrice1);
+        toPayLabel.setText(price);
+        cu_label.setText(price);
     }
 
     public double sub(double one, double two) {
@@ -263,10 +264,11 @@ public class CashierViewController implements Initializable {
     @FXML
     public void removeProductFromSale(KeyEvent event) throws IOException {
         if (event.getCode() == KeyCode.DELETE) {
+            OrderLine ol = ca_orderTable.getSelectionModel().getSelectedItem();
             int quantityToRemove = Integer.parseInt(productQuantity.getText());
-            double priceChange = quantityToRemove*ca_orderTable.getSelectionModel().getSelectedItem().getTotalPrice()/ca_orderTable.getSelectionModel().getSelectedItem().getQuantity();
+            double priceChange = quantityToRemove >= ol.getQuantity() ? ol.getTotalPrice() : quantityToRemove*ol.getTotalPrice()/ol.getQuantity();
             TableView<OrderLine> cu = customerViewController.getCustomerTable();
-            executeCommand(new RemoveOrderLineCommand(cu, ca_orderTable, currentOrder, quantityToRemove));
+            executeCommand(new RemoveOrderLineCommand(cu, ca_orderTable, currentOrder, ol, quantityToRemove, priceChange));
             updateTotalPrice(priceChange, false);
         }
     }
