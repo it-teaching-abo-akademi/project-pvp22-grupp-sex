@@ -2,31 +2,26 @@ package com.example.demo.GUI;
 
 import com.example.demo.api.CashBoxAPI;
 import com.example.demo.api.ProductCatalogAPI;
-import com.example.demo.api.ProductController;
 import com.example.demo.dao.Command;
 import com.example.demo.dao.Commands.AddDiscountCommand;
 import com.example.demo.dao.Commands.AddNewOrderLineCommand;
 import com.example.demo.dao.Commands.RemoveOrderLineCommand;
-import com.example.demo.dao.Command;
-import com.example.demo.dao.Commands.AddNewOrderLineCommand;
 import com.example.demo.model.Order;
 import com.example.demo.model.OrderLine;
 import com.example.demo.model.Product;
 import com.example.demo.service.CardReaderService;
 import com.example.demo.service.CashBoxService;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.TextFlow;
-import javafx.event.ActionEvent;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -37,7 +32,6 @@ public class CashierViewController implements Initializable {
 
     @FXML
     public AnchorPane scannerView;
-    @FXML
     public ScannerViewController scannerViewController;
     @FXML
     public Label toPayLabel;
@@ -52,7 +46,7 @@ public class CashierViewController implements Initializable {
     private final Order currentOrder;
 
     private CashBoxService cashBoxService;
-    private final CardReaderService cardReaderService;
+    private CardReaderService cardReaderService;
     @FXML
     public TextFlow searchResultField;
     @FXML
@@ -76,7 +70,9 @@ public class CashierViewController implements Initializable {
 
     private double totalPrice1;
 
+
     public CashierViewController() {
+        this.scannerViewController = new ScannerViewController();
         this.cardReaderService = new CardReaderService();
         this.currentOrder = new Order("1");
     }
@@ -280,6 +276,9 @@ public class CashierViewController implements Initializable {
 
     public void registerController(CustomerViewController customerViewController){
         this.customerViewController = customerViewController;
+    }
+    public void registerController(ScannerViewController scannerViewController){
+        this.scannerViewController = scannerViewController;
     }
 
 }

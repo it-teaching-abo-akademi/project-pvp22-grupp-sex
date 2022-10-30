@@ -1,8 +1,6 @@
 package com.example.demo.GUI;
 
 import com.example.demo.dao.Command;
-import com.example.demo.dao.Commands.AddNewOrderLineCommand;
-import com.example.demo.model.Order;
 import com.example.demo.model.OrderLine;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -10,8 +8,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -20,6 +16,7 @@ public class CustomerViewController implements Initializable {
 
     private CashierApplication ca;
     private CashierViewController cashierViewController;
+    private ScannerViewController scannerViewController;
     @FXML
     public Label toPayField;
     @FXML
@@ -56,4 +53,8 @@ public class CustomerViewController implements Initializable {
     public void registerController(CashierViewController cashierViewController){
         this.cashierViewController = cashierViewController;
     }
+    public void registerController(ScannerViewController scannerViewController){
+        this.scannerViewController = scannerViewController;
+    }
+
 }
