@@ -1,34 +1,28 @@
 package com.example.demo.model;
 
+import javafx.beans.property.SimpleStringProperty;
+
 import javax.persistence.*;
 import java.util.List;
 
-@Entity
-@Table
 public class Product {
-    @Id
-    @SequenceGenerator(
-            name = "product_sequence",
-            sequenceName = "product_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "product_sequence"
-    )
     private String barcode;
     private String name;
     private int VAT;
     private double price;
     //private List<String> keyWords;
+    private final SimpleStringProperty tableName;
 
-    public Product() {
+
+    public SimpleStringProperty result_nameProperty(){
+        return tableName;
     }
 
     public Product(String barcode, String name, int VAT, List<String> keyWords) {
         this.barcode = barcode;
         this.name = name;
         this.VAT = VAT;
+        this.tableName = new SimpleStringProperty(name);
         //this.keyWords = keyWords;
 
         setPrice();
@@ -37,6 +31,7 @@ public class Product {
     public Product(String barcode, String name) {
         this.barcode = barcode;
         this.name = name;
+        this.tableName = new SimpleStringProperty(name);
         setPrice();
     }
 

@@ -58,6 +58,10 @@ public class CashierViewController implements Initializable {
     @FXML
     public TableView<OrderLine> ca_orderTable;
     @FXML
+    public TableView<Product> searchResultTable;
+    @FXML
+    public TableColumn<Product, String> result_name;
+    @FXML
     public TableColumn<OrderLine, Integer> ca_quantity;
     @FXML
     public TableColumn<OrderLine, String> ca_name;
@@ -66,7 +70,7 @@ public class CashierViewController implements Initializable {
     @FXML
     public TextField enterBar;
     @FXML
-    public Button scanBar;
+    public TextField scanBar;
     @FXML
     public TextField searchForProduct;
     @FXML
@@ -250,6 +254,13 @@ public class CashierViewController implements Initializable {
             addProductToSale(product);
         }
     }
+    public void getProductByKeyword(ActionEvent event) throws IOException {
+        ProductCatalogAPI pcAPI = new ProductCatalogAPI();
+        Product product = pcAPI.getProductByName(scanBar.getText());
+        if (product != null) {
+            addProductToSearchTable(product);
+        }
+    }
 
     public void addProductToSale(Product product) {
         String orderNum = currentOrder.getOrderNumber();
@@ -258,6 +269,10 @@ public class CashierViewController implements Initializable {
         updateTotalPrice(ol.getTotalPrice(), true);
         TableView<OrderLine> cu = customerViewController.getCustomerTable();
         executeCommand(new AddNewOrderLineCommand(cu, ca_orderTable, currentOrder, ol));
+    }
+    public void addProductToSearchTable(Product product) {
+        searchResultTable.getItems().add(product);
+        //Displayar inte nånting i GUI
     }
 
     @FXML
