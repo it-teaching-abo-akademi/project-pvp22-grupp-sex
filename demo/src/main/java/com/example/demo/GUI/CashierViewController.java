@@ -215,10 +215,6 @@ public class CashierViewController implements Initializable {
         }
     }
 
-    public void openScanner(MouseEvent mouseEvent) throws IOException {
-        scannerViewController.openScanner();
-    }
-
     //input from GUI: Manually typed barcode
     //Takes a (list) from product catalog and returns matching product(s)
     //adds product(s) to currentOrder and updates GUI table

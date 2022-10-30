@@ -1,6 +1,5 @@
 package com.example.demo.GUI;
 
-import com.example.demo.dao.Command;
 import com.example.demo.model.OrderLine;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -13,8 +12,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class CustomerViewController implements Initializable {
-
-    private CashierApplication ca;
     private CashierViewController cashierViewController;
     private ScannerViewController scannerViewController;
     @FXML
@@ -41,15 +38,6 @@ public class CustomerViewController implements Initializable {
         cu_name.setCellValueFactory( new PropertyValueFactory<OrderLine, String>("name"));
         cu_price.setCellValueFactory( new PropertyValueFactory<OrderLine, Double>("price"));
     }
-    public void executeCommand(Command command) {
-        command.execute();
-    }
-    /*
-    @FXML
-    public void addLineToCustomerTable(Order currentOrder, OrderLine ol) {
-        executeCommand(new AddNewOrderLineCommand(customerTable, currentOrder, ol));
-    }
-    */
     public void registerController(CashierViewController cashierViewController){
         this.cashierViewController = cashierViewController;
     }
