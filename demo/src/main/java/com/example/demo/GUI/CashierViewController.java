@@ -2,31 +2,26 @@ package com.example.demo.GUI;
 
 import com.example.demo.api.CashBoxAPI;
 import com.example.demo.api.ProductCatalogAPI;
-import com.example.demo.api.ProductController;
 import com.example.demo.dao.Command;
 import com.example.demo.dao.Commands.AddDiscountCommand;
 import com.example.demo.dao.Commands.AddNewOrderLineCommand;
 import com.example.demo.dao.Commands.RemoveOrderLineCommand;
-import com.example.demo.dao.Command;
-import com.example.demo.dao.Commands.AddNewOrderLineCommand;
 import com.example.demo.model.Order;
 import com.example.demo.model.OrderLine;
 import com.example.demo.model.Product;
 import com.example.demo.service.CardReaderService;
 import com.example.demo.service.CashBoxService;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.TextFlow;
-import javafx.event.ActionEvent;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -37,7 +32,6 @@ public class CashierViewController implements Initializable {
 
     @FXML
     public AnchorPane scannerView;
-    @FXML
     public ScannerViewController scannerViewController;
     @FXML
     public Label toPayLabel;
@@ -52,7 +46,7 @@ public class CashierViewController implements Initializable {
     private final Order currentOrder;
 
     private CashBoxService cashBoxService;
-    private final CardReaderService cardReaderService;
+    private CardReaderService cardReaderService;
     @FXML
     public TextFlow searchResultField;
     @FXML
@@ -80,7 +74,9 @@ public class CashierViewController implements Initializable {
 
     private double totalPrice1;
 
+
     public CashierViewController() {
+        this.scannerViewController = new ScannerViewController();
         this.cardReaderService = new CardReaderService();
         this.currentOrder = new Order("1");
     }
@@ -137,8 +133,9 @@ public class CashierViewController implements Initializable {
         else {
             totalPrice1 = round(sub(totalPrice1, priceChange), 2);
         }
-        this.toPayLabel.setText(Double.toString(totalPrice1));
-        cu_label.setText(Double.toString(totalPrice1));
+        String price = totalPrice1 == 0.0 ? "" : Double.toString(totalPrice1);
+        toPayLabel.setText(price);
+        cu_label.setText(price);
     }
 
     public double sub(double one, double two) {
@@ -222,10 +219,6 @@ public class CashierViewController implements Initializable {
         }
     }
 
-    public void openScanner(MouseEvent mouseEvent) throws IOException {
-        scannerViewController.openScanner();
-    }
-
     //input from GUI: Manually typed barcode
     //Takes a (list) from product catalog and returns matching product(s)
     //adds product(s) to currentOrder and updates GUI table
@@ -278,23 +271,26 @@ public class CashierViewController implements Initializable {
     @FXML
     public void removeProductFromSale(KeyEvent event) throws IOException {
         if (event.getCode() == KeyCode.DELETE) {
+            OrderLine ol = ca_orderTable.getSelectionModel().getSelectedItem();
             int quantityToRemove = Integer.parseInt(productQuantity.getText());
-            double priceChange = quantityToRemove*ca_orderTable.getSelectionModel().getSelectedItem().getTotalPrice()/ca_orderTable.getSelectionModel().getSelectedItem().getQuantity();
+            double priceChange = quantityToRemove >= ol.getQuantity() ? ol.getTotalPrice() : quantityToRemove*ol.getTotalPrice()/ol.getQuantity();
             TableView<OrderLine> cu = customerViewController.getCustomerTable();
-            executeCommand(new RemoveOrderLineCommand(cu, ca_orderTable, currentOrder, quantityToRemove));
+            executeCommand(new RemoveOrderLineCommand(cu, ca_orderTable, currentOrder, ol, quantityToRemove, priceChange));
             updateTotalPrice(priceChange, false);
         }
     }
 
     private void setProductQuantity(OrderLine ol) {
         if(!productQuantity.getText().isEmpty()) {
-            System.out.println(productQuantity.getText());
             ol.changeQuantity(Integer.parseInt(productQuantity.getText()));
         }
     }
 
     public void registerController(CustomerViewController customerViewController){
         this.customerViewController = customerViewController;
+    }
+    public void registerController(ScannerViewController scannerViewController){
+        this.scannerViewController = scannerViewController;
     }
 
 }
