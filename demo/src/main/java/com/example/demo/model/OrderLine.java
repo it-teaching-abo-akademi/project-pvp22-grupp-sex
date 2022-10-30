@@ -62,7 +62,6 @@ public class OrderLine {
     }
 
     public SimpleStringProperty nameProperty() {
-        System.out.println(tableName.get());
         return tableName;
     }
 

@@ -267,7 +267,6 @@ public class CashierViewController implements Initializable {
 
     private void setProductQuantity(OrderLine ol) {
         if(!productQuantity.getText().isEmpty()) {
-            System.out.println(productQuantity.getText());
             ol.changeQuantity(Integer.parseInt(productQuantity.getText()));
         }
     }
