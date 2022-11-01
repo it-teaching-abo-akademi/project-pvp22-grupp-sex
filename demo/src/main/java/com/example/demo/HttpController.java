@@ -186,15 +186,31 @@ The body needs to be formated as a json string.
             throw new RuntimeException(e);
         }
     }
+    public static HttpResponse<String> postRequestWithDataString(String uri, String arg) {
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(uri))
+                .header("Content-Type", "application/x-www-form-urlencoded")
+                .POST(HttpRequest.BodyPublishers.ofString(arg))
+                .build();
+
+        try {
+            return client.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
     /*
     Converts the Map<String, Object> to a String format that can be sent as a parameter in an HTTP Request
      */
     public static String argsFromMap(Map<String, Object> args) {
-        String argsString = "";
+        StringBuilder argsString = new StringBuilder();
         for (String arg : args.keySet()) {
-            argsString = argsString + arg + "=" + args.get(arg).toString() + "&";
+            argsString.append(arg).append("=").append(args.get(arg).toString()).append("&");
         }
-        return argsString;
+        return argsString.toString();
     }
 
 }

@@ -1,6 +1,9 @@
 package com.example.demo.service;
 
 import com.example.demo.api.CardReaderAPI;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.Map;
 
 public class CardReaderService {
 
@@ -12,13 +15,12 @@ public class CardReaderService {
 
     //methods to connect API with UI controller
 
-
     public String getStatus() {
         return cardReaderAPI.getCardReaderStatus();
     }
 
-    public void getResult() {
-        cardReaderAPI.getCardReaderResult("result");
+    public Map<String, Object> getResult() {
+        return cardReaderAPI.getCardReaderResult("result");
     }
 
 
@@ -32,5 +34,6 @@ public class CardReaderService {
 
     public void waitForPayment(String amount) {
         cardReaderAPI.waitForPayment(amount);
+        getStatus();
     }
 }

@@ -2,13 +2,10 @@ package com.example.demo.GUI;
 
 import com.example.demo.api.CashBoxAPI;
 import com.example.demo.api.ProductCatalogAPI;
-import com.example.demo.api.ProductController;
 import com.example.demo.dao.Command;
 import com.example.demo.dao.Commands.AddDiscountCommand;
 import com.example.demo.dao.Commands.AddNewOrderLineCommand;
 import com.example.demo.dao.Commands.RemoveOrderLineCommand;
-import com.example.demo.dao.Command;
-import com.example.demo.dao.Commands.AddNewOrderLineCommand;
 import com.example.demo.model.Order;
 import com.example.demo.model.OrderLine;
 import com.example.demo.model.Product;
@@ -16,7 +13,6 @@ import com.example.demo.service.CardReaderService;
 import com.example.demo.service.CashBoxService;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -25,12 +21,12 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.TextFlow;
 import javafx.event.ActionEvent;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
-import javafx.stage.Window;
 
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
+import java.util.Map;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class CashierViewController implements Initializable {
@@ -49,7 +45,7 @@ public class CashierViewController implements Initializable {
     public TextField cashInput;
     private CashierApplication ca;
     private CustomerViewController customerViewController;
-    private final Order currentOrder;
+    private Order currentOrder;
 
     private CashBoxService cashBoxService;
     private final CardReaderService cardReaderService;
@@ -162,19 +158,33 @@ public class CashierViewController implements Initializable {
     //start by resetting card reader to idle
     //then call waitforpayment
     //wait until customer has completed payment (or failed to do so) and return the result
-    public void cardPayment(MouseEvent mouseEvent){
+    public void cardPayment(MouseEvent mouseEvent) throws InterruptedException {
         cardReaderService.resetCardReader();
-        cardReaderService.waitForPayment(toPayLabel.getText());
-        String status = cardReaderService.getStatus();
-        while (status=="WAITING_FOR_PAYMENT") {
+        statusLabel.setText("Waiting for payment");
+        String amountToPay = cashInput.getText().isBlank() ? toPayLabel.getText() : cashInput.getText();
+        cardReaderService.waitForPayment(amountToPay);
+        do {} while(!cardReaderService.getStatus().equals("DONE"));
+        Map<String, Object> result = cardReaderService.getResult();
+        String paymentStatus = String.valueOf(result.get("paymentState")).toLowerCase();
+        System.out.println(paymentStatus);
 
+        String text = "";
+        double priceChange = 0;
+        switch (paymentStatus) {
+            case "accepted" -> {
+                text = "Accepted";
+                System.out.println("yes");
+                priceChange = Double.parseDouble(toPayLabel.getText());
+            }
+            case "insufficient_funds" -> {
+                statusLabel.setText("Insufficient funds");
+            }
+            case "unsupported_card" -> statusLabel.setText("Unsupported card");
+            case "invalid_pin" -> statusLabel.setText("Invalid PIN");
+            case "network_error" -> statusLabel.setText("Network Error");
         }
-        if (cardReaderService.getStatus()=="IDLE"){
-            System.out.println("No transaction taking place");
-        }
-        else {
-            cardReaderService.getResult();
-        }
+        statusLabel.setText(text);
+        updateTotalPrice(priceChange, false);
     }
 
     public void addProductToTable(MouseEvent mouseEvent) {
@@ -275,7 +285,6 @@ public class CashierViewController implements Initializable {
 
     private void setProductQuantity(OrderLine ol) {
         if(!productQuantity.getText().isEmpty()) {
-            System.out.println(productQuantity.getText());
             ol.changeQuantity(Integer.parseInt(productQuantity.getText()));
         }
     }
@@ -284,4 +293,16 @@ public class CashierViewController implements Initializable {
         this.customerViewController = customerViewController;
     }
 
+    public void completePurchase() {
+        //print receipt
+        //send data to DB
+        //wipe orderTable & update currentOrders orderNr
+        clearTableForNextOrder();
+    }
+
+    public  void clearTableForNextOrder() {
+        ca_orderTable.getItems().clear();
+        customerViewController.getCustomerTable().getItems().clear();
+        currentOrder = new Order(currentOrder.getOrderNumber() + 1);
+    }
 }

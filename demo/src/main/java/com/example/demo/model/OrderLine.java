@@ -15,8 +15,8 @@ public class OrderLine {
     private final String orderNumber;
 
     private SimpleIntegerProperty tableQuantity;
-    private SimpleStringProperty tableName;
-    private SimpleDoubleProperty tablePrice;
+    private final SimpleStringProperty tableName;
+    private final SimpleDoubleProperty tablePrice;
     public OrderLine(String orderNumber, OrderLine ol) {
         this.orderNumber = orderNumber;
         this.name = ol.name;
@@ -62,10 +62,8 @@ public class OrderLine {
     }
 
     public SimpleStringProperty nameProperty() {
-        System.out.println(tableName.get());
         return tableName;
     }
-
     public SimpleIntegerProperty quantityProperty() {
         return tableQuantity;
     }
