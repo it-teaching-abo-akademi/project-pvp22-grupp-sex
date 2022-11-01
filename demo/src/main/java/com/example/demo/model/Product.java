@@ -12,11 +12,18 @@ public class Product {
     private int VAT;
     private double price;
     //private List<String> keyWords;
+    private final SimpleStringProperty tableName;
+
+
+    public SimpleStringProperty result_nameProperty(){
+        return tableName;
+    }
 
     public Product(String barcode, String name, int VAT, List<String> keyWords) {
         this.barcode = barcode;
         this.name = name;
         this.VAT = VAT;
+        this.tableName = new SimpleStringProperty(name);
         //this.keyWords = keyWords;
 
         setPrice();
@@ -25,6 +32,7 @@ public class Product {
     public Product(String barcode, String name) {
         this.barcode = barcode;
         this.name = name;
+        this.tableName = new SimpleStringProperty(name);
         setPrice();
     }
 

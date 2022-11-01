@@ -2,23 +2,30 @@ package com.example.demo.GUI;
 
 import com.example.demo.api.CashBoxAPI;
 import com.example.demo.api.ProductCatalogAPI;
+import com.example.demo.api.ProductController;
 import com.example.demo.dao.Command;
 import com.example.demo.dao.Commands.AddDiscountCommand;
 import com.example.demo.dao.Commands.AddNewOrderLineCommand;
 import com.example.demo.dao.Commands.RemoveOrderLineCommand;
+import com.example.demo.dao.Command;
+import com.example.demo.dao.Commands.AddNewOrderLineCommand;
 import com.example.demo.model.Order;
 import com.example.demo.model.OrderLine;
 import com.example.demo.model.Product;
 import com.example.demo.service.CardReaderService;
 import com.example.demo.service.CashBoxService;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.TextFlow;
+import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import javafx.scene.control.cell.PropertyValueFactory;
 
@@ -48,11 +55,15 @@ public class CashierViewController implements Initializable {
     private Order currentOrder;
 
     private CashBoxService cashBoxService;
-    private final CardReaderService cardReaderService;
+    private CardReaderService cardReaderService;
     @FXML
     public TextFlow searchResultField;
     @FXML
     public TableView<OrderLine> ca_orderTable;
+    @FXML
+    public TableView<Product> searchResultTable;
+    @FXML
+    public TableColumn<Product, String> result_name;
     @FXML
     public TableColumn<OrderLine, Integer> ca_quantity;
     @FXML
@@ -62,7 +73,7 @@ public class CashierViewController implements Initializable {
     @FXML
     public TextField enterBar;
     @FXML
-    public Button scanBar;
+    public TextField scanBar;
     @FXML
     public TextField searchForProduct;
     @FXML
@@ -72,7 +83,9 @@ public class CashierViewController implements Initializable {
 
     private double totalPrice1;
 
+
     public CashierViewController() {
+        this.scannerViewController = new ScannerViewController();
         this.cardReaderService = new CardReaderService();
         this.currentOrder = new Order("1");
     }
@@ -229,10 +242,6 @@ public class CashierViewController implements Initializable {
         }
     }
 
-    public void openScanner(MouseEvent mouseEvent) throws IOException {
-        scannerViewController.openScanner();
-    }
-
     //input from GUI: Manually typed barcode
     //Takes a (list) from product catalog and returns matching product(s)
     //adds product(s) to currentOrder and updates GUI table
@@ -261,6 +270,13 @@ public class CashierViewController implements Initializable {
             addProductToSale(product);
         }
     }
+    public void getProductByKeyword(ActionEvent event) throws IOException {
+        ProductCatalogAPI pcAPI = new ProductCatalogAPI();
+        Product product = pcAPI.getProductByName(scanBar.getText());
+        if (product != null) {
+            addProductToSearchTable(product);
+        }
+    }
 
     public void addProductToSale(Product product) {
         String orderNum = currentOrder.getOrderNumber();
@@ -269,6 +285,10 @@ public class CashierViewController implements Initializable {
         updateTotalPrice(ol.getTotalPrice(), true);
         TableView<OrderLine> cu = customerViewController.getCustomerTable();
         executeCommand(new AddNewOrderLineCommand(cu, ca_orderTable, currentOrder, ol));
+    }
+    public void addProductToSearchTable(Product product) {
+        searchResultTable.getItems().add(product);
+        //Displayar inte nånting i GUI
     }
 
     @FXML
@@ -291,6 +311,9 @@ public class CashierViewController implements Initializable {
 
     public void registerController(CustomerViewController customerViewController){
         this.customerViewController = customerViewController;
+    }
+    public void registerController(ScannerViewController scannerViewController){
+        this.scannerViewController = scannerViewController;
     }
 
     public void completePurchase() {

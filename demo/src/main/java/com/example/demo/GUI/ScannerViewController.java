@@ -2,13 +2,9 @@ package com.example.demo.GUI;
 
 import com.example.demo.api.ProductCatalogAPI;
 import com.example.demo.model.Product;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyEvent;
-import javafx.stage.Stage;
-import javafx.stage.Window;
 
 import java.io.IOException;
 
@@ -16,24 +12,22 @@ public class ScannerViewController {
 
     @FXML
     public TextField barcodeScan;
+    private CashierViewController cashierViewController;
 
     public ScannerViewController(){
     }
-    public void openScanner() throws IOException {
-        Stage scanner = new Stage();
-        FXMLLoader fxmlLoader = new FXMLLoader(CashierApplication.class.getResource("/scanner-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 300, 150);
 
-        scanner.setTitle("Barcode Scanner");
-        scanner.setScene(scene);
-        scanner.show();
-
-        //FXMLLoader cashierGuiLoader = new FXMLLoader()
-    }
     @FXML
-    public void addProductToSale(KeyEvent keyEvent) {
+    public void addProductToSale(ActionEvent event) throws IOException {
         ProductCatalogAPI pcAPI = new ProductCatalogAPI();
         Product product = pcAPI.getProductByBarcode(barcodeScan.getText());
+        if(product != null) {
+            cashierViewController.addProductToSale(product);
+        }
+    }
+
+    public void registerController(CashierViewController cashierViewController) {
+        this.cashierViewController = cashierViewController;
     }
 
 }
